@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Exam1</title>
+		
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+		
+		<link rel="stylesheet" href="css/main.css">
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<header class="row page-header-row">
+			<div class="col-md-3 col-sm-3 col-xs-3 pad-left-0">
+				<div id="logo" class="mg-top-10">
+					<img src="img/logo.png" width="100%">
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-9 col-xs-9">
+				<div class="row">
+					<div id="company-name" class="pull-right mg-top-10">
+						<img src="img/company_name.png" width="100%">
+					</div>
+				</div>
+				<div class="row">
+					<div id="account" class="pull-right mg-top-10">
+						Welcome <strong>NguyenTN</strong>
+					</div>
+				</div>
+				<div class="row">
+					<div class="pull-right">
+						<a href="#">Logout</a>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container pad-left-0">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse pad-left-0" aria-expanded="false">
+					<ul class="nav navbar-nav">
+						<li><a href="./index.html">Dashboard</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Template Management<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Template List</a></li>
+								<li><a href="#">Create Template</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Content Management<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Scanned Record List</a></li>
+								<li><a href="#">Scanned File</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Configuration</a></li>
+						<li><a href="#">About</a></li>           
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<div id="body-container">
+			<h2>Your all templates</h2>
+			
+			<!-- Search and New -->
+			<div class="seach-and-new-box">
+				<div class="row mg-0">
+					<div class="col-md-3 col-sm-3 col-xs-3 search-box">
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
+							<input type="text" class="form-control" placeholder="Search..." aria-describedby="basic-addon1">
+						</div>
+					</div>
+					<div class="col-md-9 col-sm-9 col-xs-9">
+						<div class="pull-right">
+							<a class="btn-add-new-template" href="#">Add template</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+			<!-- Top Pagination -->
+			<div class="top-pagination">
+				<div class="row mg-0">
+					<div class="col-md-1 col-sm-1 col-xs-1">
+						<div class="item-on-page-box">
+							5/25
+						</div>
+					</div>
+					<div class="col-md-11 col-sm-11 col-xs-11 pad-right-0">
+						<div class="pull-right">
+							<nav>
+								<ul class="pagination">
+									<li class="disabled">
+										<a href="#" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li class="active"><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li>
+										<a href="#" aria-label="Next">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+			<!-- Template list -->
+			<div class="template-list-box">
+				<div class="row template-item mg-0">
+					<div class="row mg-0">
+						<div class="col-md-2 col-sm-3 col-xs-3 template-img-box">
+							<img src="img/template.png">
+						</div>
+						<div class="col-md-10 col-sm-9 col-xs-9">
+							<div class="row mg-0 template-name-box">
+								<p class="template-name">Template Name 1</p>
+							</div>
+							<div class="row mg-0 template-desc-box">
+								<p>TDescription of the template will be shown here as preview option. This template is used for PO and Registration Form . Description of the template will be shown here as preview option. This template is used for PO and Registration Form. This template is used for PO and Registration Form. This template is used for PO and Registration Form.</p>
+								<p>Created Date: <strong>01-Jun-2016</strong></p>
+								<p>Scanned file use this: <strong>5</strong> items</p>
+							</div>
+						</div>
+					</div>
+					<div class="row mg-0 template-btn-box">
+						<div class="col-md-12">
+							<div class="pull-right">
+								<a class="btn-detail" href="#">Detail</a>
+								<a class="btn-edit" href="#">Edit</a>
+								<a class="btn-archive" href="#">Archive</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row template-item mg-0">
+					<div class="row mg-0">
+						<div class="col-md-2 col-sm-3 col-xs-3 template-img-box">
+							<img src="img/template.png">
+						</div>
+						<div class="col-md-10 col-sm-9 col-xs-9">
+							<div class="row mg-0 template-name-box">
+								<p class="template-name">Template Name 1</p>
+							</div>
+							<div class="row mg-0 template-desc-box">
+								<p>TDescription of the template will be shown here as preview option. This template is used for PO and Registration Form . Description of the template will be shown here as preview option. This template is used for PO and Registration Form. This template is used for PO and Registration Form. This template is used for PO and Registration Form.</p>
+								<p>Created Date: <strong>01-Jun-2016</strong></p>
+								<p>Scanned file use this: <strong>5</strong> items</p>
+							</div>
+						</div>
+					</div>
+					<div class="row mg-0 template-btn-box">
+						<div class="col-md-12">
+							<div class="pull-right">
+								<a class="btn-detail" href="#">Detail</a>
+								<a class="btn-edit" href="#">Edit</a>
+								<a class="btn-archive" href="#">Archive</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row template-item mg-0">
+					<div class="row mg-0">
+						<div class="col-md-2 col-sm-3 col-xs-3 template-img-box">
+							<img src="img/template.png">
+						</div>
+						<div class="col-md-10 col-sm-9 col-xs-9">
+							<div class="row mg-0 template-name-box">
+								<p class="template-name">Template Name 1</p>
+							</div>
+							<div class="row mg-0 template-desc-box">
+								<p>TDescription of the template will be shown here as preview option. This template is used for PO and Registration Form . Description of the template will be shown here as preview option. This template is used for PO and Registration Form. This template is used for PO and Registration Form. This template is used for PO and Registration Form.</p>
+								<p>Created Date: <strong>01-Jun-2016</strong></p>
+								<p>Scanned file use this: <strong>5</strong> items</p>
+							</div>
+						</div>
+					</div>
+					<div class="row mg-0 template-btn-box">
+						<div class="col-md-12">
+							<div class="pull-right">
+								<a class="btn-detail" href="#">Detail</a>
+								<a class="btn-edit" href="#">Edit</a>
+								<a class="btn-archive" href="#">Archive</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row template-item mg-0">
+					<div class="row mg-0">
+						<div class="col-md-2 col-sm-3 col-xs-3 template-img-box">
+							<img src="img/template.png">
+						</div>
+						<div class="col-md-10 col-sm-9 col-xs-9">
+							<div class="row mg-0 template-name-box">
+								<p class="template-name">Template Name 1</p>
+							</div>
+							<div class="row mg-0 template-desc-box">
+								<p>TDescription of the template will be shown here as preview option. This template is used for PO and Registration Form . Description of the template will be shown here as preview option. This template is used for PO and Registration Form. This template is used for PO and Registration Form. This template is used for PO and Registration Form.</p>
+								<p>Created Date: <strong>01-Jun-2016</strong></p>
+								<p>Scanned file use this: <strong>5</strong> items</p>
+							</div>
+						</div>
+					</div>
+					<div class="row mg-0 template-btn-box">
+						<div class="col-md-12">
+							<div class="pull-right">
+								<a class="btn-detail" href="#">Detail</a>
+								<a class="btn-edit" href="#">Edit</a>
+								<a class="btn-archive" href="#">Archive</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row template-item mg-0">
+					<div class="row mg-0">
+						<div class="col-md-2 col-sm-3 col-xs-3 template-img-box">
+							<img src="img/template.png">
+						</div>
+						<div class="col-md-10 col-sm-9 col-xs-9">
+							<div class="row mg-0 template-name-box">
+								<p class="template-name">Template Name 1</p>
+							</div>
+							<div class="row mg-0 template-desc-box">
+								<p>TDescription of the template will be shown here as preview option. This template is used for PO and Registration Form . Description of the template will be shown here as preview option. This template is used for PO and Registration Form. This template is used for PO and Registration Form. This template is used for PO and Registration Form.</p>
+								<p>Created Date: <strong>01-Jun-2016</strong></p>
+								<p>Scanned file use this: <strong>5</strong> items</p>
+							</div>
+						</div>
+					</div>
+					<div class="row mg-0 template-btn-box">
+						<div class="col-md-12">
+							<div class="pull-right">
+								<a class="btn-detail" href="#">Detail</a>
+								<a class="btn-edit" href="#">Edit</a>
+								<a class="btn-archive" href="#">Archive</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Bottom Pagination -->
+			<div class="bot-pagination">
+				<div class="row mg-0">
+					<div class="col-md-12 col-sm-12 col-xs-12 pad-right-0">
+						<div class="pull-right">
+							<nav>
+								<ul class="pagination">
+									<li class="disabled">
+										<a href="#" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li class="active"><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li>
+										<a href="#" aria-label="Next">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+#body-container {
+	margin: 0 auto;
+	margin-top: 5px;
+}
+
+.seach-and-new-box {
+	
+}
+
+.item-on-page-box {
+	margin: 20px 0px;
+}
+
+.template-list-box {
+	
+}
+	
+.template-item {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 15px 0px;
+	margin-bottom: 20px;
+	padding-left: 40px;
+}
+
+.template-list-box .template-item:last-child {
+	margin-bottom: 0px;
+}
+
+.template-item .template-img-box {
+	
+}
+
+.template-item .template-img-box img{
+	max-width: 120px;
+    max-height: 160px;
+}
+
+.template-item .template-name-box {
+}
+
+.template-item .template-name {
+	font-size: 18px;
+    color: #333333;
+}
+
+.template-item .template-desc-box {
+	
+}
+
+.template-item .template-desc-box p{
+	margin-bottom: 5px;
+}
+
+.template-item .template-btn-box {
+	
+}
+
+.template-item .template-btn-box a {
+	width: 70px;
+    height: 24px;
+	display: inline-block;
+	font-weight: 700;
+    font-size: 14px;
+	text-align: center;
+}
+
+.template-item .template-btn-box .btn-detail{
+    background-color: #fff;
+	color: #0099FF;
+	border: 1px solid #0099ff;
+    border-right: 0px;
+    border-radius: 4px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.template-item .template-btn-box .btn-edit{
+    background-color: #0099ff;
+	color: #FFFFFF;
+	margin-left: -4px;
+	border: 1px solid #0099ff;
+    border-radius: 0px;
+}
+
+.template-item .template-btn-box .btn-archive{
+    background-color: #f00;
+	color: #FFFFFF;
+	margin-left: -4px;
+    border: 1px solid #f00;
+    border-left: 0px;
+    border-radius: 4px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}

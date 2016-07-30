@@ -1,0 +1,9 @@
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+@mixin navbar_item {
+	color: #000;
+	background: $s-menu-bg;
+}

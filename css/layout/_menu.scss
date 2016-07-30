@@ -1,0 +1,107 @@
+.navbar-default {
+	margin: 0 auto;
+	margin-top: 5px;
+	height: $menu-height;
+	min-height: $menu-height;
+	background: $p-menu-bg;
+	border-radius: 0px;
+	border: none;
+	@include box-shadow(none);
+	.navbar-toggle {
+		padding: 5px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		.icon-bar {
+			background-color: #fff;
+		}
+	}
+	.container {
+		width: 100%;
+	}
+	.navbar-header {
+		height: $menu-height;
+	}
+	.navbar-nav {
+		width: 100%;
+		* {
+			text-align: center;
+			font-size: 13px;
+		}
+		> li {
+			width: 20%;
+			border-right: 1px solid #fff;
+			&:last-child {
+				border-right: none;
+			}
+			> a {
+				padding: 0px;
+				line-height: $menu-height;
+				color: #fff;
+				white-space: nowrap;
+				overflow: hidden;
+				&:hover, &:focus {
+					@include navbar_item;
+				}
+				@media screen and (max-width: 767px) {
+					text-align: left;
+					padding-left: 25px;
+				}
+			}
+			@media screen and (max-width: 767px) {
+				width: 100%;
+				border-right: none;
+				border-bottom: 1px solid #6c7074;
+			}
+		}
+		> .open {
+			> a {
+				@include navbar_item;
+				@include box-shadow(none);
+				&:hover, &:focus {
+					@include navbar_item;
+				}
+			}
+		}
+		@media screen and (max-width: 767px) {
+			margin: 0;
+			width: 100%;
+			background: $p-menu-bg;
+		}
+	}
+	@media screen and (max-width: 767px) {
+		height: auto;
+	}
+}
+
+#navbar {
+	.dropdown-menu {
+		margin-top: 1px;
+		padding: 0px;
+		border: 1px solid #666;
+		border-radius: 0px;
+		background-color: $s-menu-bg;
+		> li {
+			border-bottom: 1px solid #666;
+			&:last-child {
+				border-bottom: none;
+			}
+			> a {
+				height: $menu-height;
+				line-height: $menu-height;
+				padding: 0px 50px;
+				color: #000 !important;
+				&:hover, &:focus {
+					background-image: none;
+					background-color: #fff;
+				}
+				@media screen and (max-width: 767px) {
+					text-align: left;
+					padding-left: 35px;
+				}
+			}
+		}
+		@media screen and (max-width: 767px) {
+			border: none;
+		}
+	}
+}

@@ -1,0 +1,193 @@
+#tab-create-template {
+	margin-top: 40px;
+	.create-template-tab-item {
+		width: 25%;
+		height: 110px;
+		border: 1px solid #d7d7d7;
+		background-color: #F9F9F9;
+		position: relative;
+		&:hover, &.actived {
+			cursor: pointer;
+			background-color: #F0F0F0;
+			.create-template-tab-number {
+				background-color: #00CC66;
+			}
+		}
+		* {
+			text-align: center;
+		}
+		h3 {
+			font-size: 14px;
+			font-weight: 700;
+			margin-top: 30px;
+		}
+		p {
+			font-size: 11px;
+			margin-bottom: 0px;
+		}
+		.create-template-tab-number {
+			position: absolute;
+			top: -23px;
+			left: 104px;
+			width: 46px;
+			height: 46px;
+			border: 1px solid #555;
+			border-radius: 23px;
+			background-color: #fff;
+			line-height: 46px;
+			font-size: 28px;
+			font-weight: 700;
+		}
+	}
+}
+
+#box-step-one {
+	margin-top: 20px;
+	* {
+		text-align: center;
+	}
+	#title-upload-file {
+		text-align: left;
+		font-weight: 700;
+	}
+	.box-upload-file {
+		height: 150px;
+		border: 2px dashed #d7d7d7;
+		border-radius: 4px;
+		position: relative;
+		
+		-webkit-transition: background-color .15s linear;
+				transition: background-color .15s linear;
+		&.is-dragover {
+			background-color: #f5f5f5;
+		}
+		.box-input-file {
+			margin-top: 20px;
+			p {
+				font-size: 20px;
+				color: #BCBCBC;
+				text-align: center;
+				margin: 0px;
+				line-height: 25px;
+			}
+			.input-file {
+				width: 0.1px;
+				height: 0.1px;
+				opacity: 0;
+				overflow: hidden;
+				position: absolute;
+				z-index: -1;
+			}
+			label {
+				border: 1px solid #d7d7d7;
+				border-radius: 4px;
+				margin-top: 10px;
+				padding: 10px 20px;
+				font-weight: normal;
+				cursor: pointer;
+			}
+			.file-selected {
+				color: #169bd5;
+				&.file-error {
+					color: #f00;
+				}
+			}
+		}
+		.box-uploading {
+			display: none;
+		}
+	}
+	.box-btn {
+		margin-top: 30px;
+		#btn-upload-file {
+			width: 140px;
+			height: 40px;
+			border: none;
+			border-radius: 5px;
+			background-color: #169bd5;
+		}
+	}
+}
+
+#box-step-two {
+	margin-top: 20px;
+	#title-detected-fields, #title-sample-file {
+		font-weight: 700;
+	}
+	#box-detected-fields {
+		border: 1px solid #d7d7d7;
+		min-height: 500px;
+		#box-fields-header {
+			padding: 6px 0px;
+			border-bottom: 2px solid #ccc;
+			div {
+				padding: 0px;
+				font-weight: 700;
+				height: 29px;
+				line-height: 29px;
+			}
+			#btn-add-field {
+				width: 29px;
+				height: 29px;
+				border: none;
+				background: url(../img/btn-add-field.png);
+			}
+		}
+		#box-fields {
+			div {
+				padding: 0px;
+			}
+			.box-field {
+				line-height: 36px;
+				&:nth-child(odd) {
+					background-color: #f2f2f2;
+				}
+				&:nth-child(even) {
+					background-color: #fff;
+				}
+				.box-field-header {
+					padding-left: 5px;
+					&:hover {
+						background-color: #f7f7f7;
+					}
+					.field-name {
+						width: 80%;
+						height: 24px;
+					}
+					.desc-preview {
+						font-weight: 700;
+						color: #006600;
+						margin-bottom: 0px;
+						display: inline-block;
+					}
+					.btn-delete-field {
+						width: 17px;
+						height: 17px;
+						line-height: 17px;
+						margin-top: 9px;
+						margin-right: 5px;
+						border: none;
+						background: url(../img/btn-delete-field.png);
+					}
+				}
+				.box-field-body {
+					display: none;
+					padding-left: 5px;
+					.field-type {
+						padding: 2px;
+						width: 200px;
+					}
+					.btn-set-coordination {
+						width: 50px;
+						height: 30px;
+						line-height: 30px;
+						color: #fff;
+						border: none;
+						border-radius: 5px;
+						background-color: #169bd5;
+					}
+				}
+			}
+		}
+	}
+}
