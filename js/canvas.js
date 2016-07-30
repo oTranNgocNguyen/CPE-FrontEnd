@@ -2,10 +2,13 @@
 // 0: User have not defined the field.
 // 1: User have never drawn rectange for the field on canvas.
 // 2: User have drawn rectange for the field on canvas.
-var drawStatus = 1;
+var drawStatus = 0;
 
 // Detect only one rectange can manipulate on time. 
 var currentRect = {};
+
+// List of rectange.
+var lstRect = [];
 
 // Detect rectange can draw/re-draw or not.
 var isDraw = false;
@@ -307,8 +310,11 @@ var mousePos;
 
 // Draw
 function draw() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.strokeStyle = "#FF0000";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "#FF0000";
+    for (var i = 0; i < lstRect.length; i++) {
+        ctx.strokeRect(lstRect[i].x, lstRect[i].y, lstRect[i].w, lstRect[i].h);
+    }
 	ctx.strokeRect(currentRect.x, currentRect.y, currentRect.w, currentRect.h);
 	if (drawStatus == 2) {
 		if (currentHandle) {
