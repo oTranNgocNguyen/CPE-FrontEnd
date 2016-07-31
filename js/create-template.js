@@ -50,13 +50,19 @@ $(document).ready(function () {
     });
 
     $("#btn-upload-file").click(function (evt) {
+		/* For BE
         uploadSampleFile(input.files);
+		*/
+		/* For FE */
+		changeTab();
+		/* */
     });
 
 
 
     /* Step 2 */
     $('#btn-add-field').click(function () {
+		/* For BE
         $.ajax({
             type: "GET",
             url: "/Template/AddField",
@@ -71,6 +77,15 @@ $(document).ready(function () {
             error: function () {
             }
         });
+		*/
+		/* For FE */
+		$('#box-fields .box-field').each(function () {
+			$(this).children('.box-field-body').css("display", "none");
+			$(this).find('.glyphicon').removeClass('glyphicon-menu-up');
+		});
+		$('#box-fields').append($('#box-field-temp').html());
+		drawStatus = 1;
+		/* */
     });
 
     $(document).on("click", ".btn-set-coordination", function(e){
