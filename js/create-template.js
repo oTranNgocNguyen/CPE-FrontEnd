@@ -84,13 +84,27 @@ $(document).ready(function () {
 			$(this).find('.glyphicon').removeClass('glyphicon-menu-up');
 		});
 		$('#box-fields').append($('#box-field-temp').html());
+		var id = generateId(30);
+		$('#box-fields .box-field').last().attr('id', id);
 		drawStatus = 1;
 		/* */
     });
 
     $(document).on("click", ".btn-set-coordination", function(e){
         drawStatus = 0;
-        lstRect.push(currentRect);
+		var rect = {'id': $(this).closest('.box-field').attr('id'), 'rect': currentRect};
+        lstRect.push(rect);
+        initRect();
+    });
+	
+	$(document).on("click", ".btn-delete-field", function(e){
+        drawStatus = 0;
+		var id = $(this).closest('.box-field').attr('id');
+		lstRect = lstRect.filter(function(item){
+			return item.id != id; 
+		});
+		draw();
+		$('#' + id).remove();
         initRect();
     });
 
@@ -207,3 +221,17 @@ var uploadSampleFile = function (files) {
         });
     }
 };
+
+
+
+/* ---------------------------------------- Common ---------------------------------------- */
+function generateId (len){
+        var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
+        var passwordLength = len || 8;
+        var Id = "";
+        for (var x = 0; x < passwordLength; x++) {
+            var i = Math.floor(Math.random() * chars.length);
+            Id += chars.charAt(i);
+        };
+        return Id;
+    }

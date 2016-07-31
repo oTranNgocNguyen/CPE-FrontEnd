@@ -219,13 +219,24 @@ function buildRectForMove(mousePos) {
 	} else if (currentRect.x > canvas.width - currentRect.w) {
 		currentRect.x = canvas.width - currentRect.w;
 	}
-	console.log(canvas.width);
 	
 	currentRect.y = currentRect.y + h;
 	if (currentRect.y < 0) {
 		currentRect.y = 0;
 	} else if (currentRect.y > canvas.height - currentRect.h) {
 		currentRect.y = canvas.height - currentRect.h;
+	}
+}
+
+// Check and re-build currentRect after user resize rectange
+function buildRectAfterResize() {
+	if (currentRect.w < 0) {
+		currentRect.w = -currentRect.w;
+		currentRect.x = currentRect.x - currentRect.w;
+	}
+	if (currentRect.h < 0) {
+		currentRect.h = -currentRect.h;
+		currentRect.y = currentRect.y - currentRect.h;
 	}
 }
 
@@ -260,6 +271,9 @@ function mouseUp(e) {
 			drawStatus = 2;
 			break;
 		case 2:
+			if (currentHandle) {
+				buildRectAfterResize();
+			}
 			currentHandle = false;
 	}
 	isDraw = false;
@@ -268,13 +282,13 @@ function mouseUp(e) {
 
 // Mousemove event
 function mouseMove(e) {
-var mousePos;
+	var mousePos;
 	switch (drawStatus) {
 		case 1:
 			mousePos = getMousePosition(e, this);
-			currentRect.w = mousePos.x - currentRect.x;
-			currentRect.h = mousePos.y - currentRect.y;
 			if (isDraw) {
+				currentRect.w = mousePos.x - currentRect.x;
+				currentRect.h = mousePos.y - currentRect.y;
 				draw();
 			}
 			//console.log("x:" + currentRect.x + ", y:" + currentRect.y + ", w:" + currentRect.w + ", h:" + currentRect.h);
@@ -313,7 +327,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "#FF0000";
     for (var i = 0; i < lstRect.length; i++) {
-        ctx.strokeRect(lstRect[i].x, lstRect[i].y, lstRect[i].w, lstRect[i].h);
+        ctx.strokeRect(lstRect[i].rect.x, lstRect[i].rect.y, lstRect[i].rect.w, lstRect[i].rect.h);
     }
 	ctx.strokeRect(currentRect.x, currentRect.y, currentRect.w, currentRect.h);
 	if (drawStatus == 2) {
