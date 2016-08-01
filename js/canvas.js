@@ -10,6 +10,9 @@ var currentRect = {};
 // List of rectange.
 var lstRect = [];
 
+// Rectange which is editting.
+var edittingRect = false;
+
 // Detect rectange can draw/re-draw or not.
 var isDraw = false;
 
@@ -336,5 +339,59 @@ function draw() {
 		}
 	}
 }
+
+// Check coordination is set or not
+function checkCoordinationIsSet(id) {
+	var isSet = false;
+	for (var i = 0; i < lstRect.length; i++) {
+		if (lstRect[i].id == id) {
+			isSet = true;
+			break;
+		}
+    }
+	return isSet;
+};
+
+// Get rectange by id for edit function
+function getRectangeForEdit (id) {
+	for (var i = 0; i < lstRect.length; i++) {
+		if (lstRect[i].id == id) {
+			currentRect = lstRect[i].rect;
+			edittingRect = {'id': id, 'rect': {x: currentRect.x, y: currentRect.y, w: currentRect.w, h: currentRect.h}};
+		}
+    }
+	removeItemOutOfRectList(id);
+	draw();
+}
+
+// Remove an item out of rectange lists
+function removeItemOutOfRectList (id) {
+	lstRect = lstRect.filter(function(item){
+		return item.id != id; 
+	});
+}
+
+// Build rectange lists
+function buildRectList (id, isCancel) {
+	var rect;
+	drawStatus = 0;
+	if (isCancel) {
+		if (edittingRect) {
+			lstRect.push(edittingRect);
+		}
+		clearCurrentRect();
+	} else {
+		rect = {'id': id, 'rect': currentRect};
+		lstRect.push(rect);
+		initRect();
+	}
+	edittingRect = false;
+}
+
+// Clear current rectange and re-draw
+function clearCurrentRect() {
+	initRect();
+	draw();
+};
 
 initCanvas();

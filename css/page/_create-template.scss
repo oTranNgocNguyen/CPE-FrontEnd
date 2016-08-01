@@ -176,14 +176,26 @@
 						padding: 2px;
 						width: 200px;
 					}
-					.btn-set-coordination {
-						width: 50px;
+					.btn-set-coordination, .btn-save-coordination, .btn-cancel-coordination {
 						height: 30px;
 						line-height: 30px;
 						color: #fff;
 						border: none;
 						border-radius: 5px;
 						background-color: #169bd5;
+						padding-right: 10px;
+					}
+					.lbl-edit-coordination {
+						margin: 0px;
+						font-weight: 700;
+					}
+					.btn-edit-coordination {
+						width: 22px;
+						height: 17px;
+						line-height: 17px;
+						border: none;
+						background: url(../images/btn-edit-coordination.png);
+						
 					}
 				}
 			}

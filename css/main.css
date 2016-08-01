@@ -288,7 +288,7 @@
         width: 29px;
         height: 29px;
         border: none;
-        background: url(../img/btn-add-field.png); }
+        background: url(../images/btn-add-field.png); }
     #box-step-two #box-detected-fields #box-fields div {
       padding: 0px; }
     #box-step-two #box-detected-fields #box-fields .box-field {
@@ -316,20 +316,28 @@
           margin-top: 9px;
           margin-right: 5px;
           border: none;
-          background: url(../img/btn-delete-field.png); }
+          background: url(../images/btn-delete-field.png); }
       #box-step-two #box-detected-fields #box-fields .box-field .box-field-body {
-        display: none;
         padding-left: 5px; }
         #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .field-type {
           padding: 2px;
           width: 200px; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-set-coordination {
-          width: 50px;
+        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-set-coordination, #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-save-coordination, #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-cancel-coordination {
           height: 30px;
           line-height: 30px;
           color: #fff;
           border: none;
           border-radius: 5px;
-          background-color: #169bd5; }
+          background-color: #169bd5;
+          padding-right: 10px; }
+        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .lbl-edit-coordination {
+          margin: 0px;
+          font-weight: 700; }
+        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-edit-coordination {
+          width: 22px;
+          height: 17px;
+          line-height: 17px;
+          border: none;
+          background: url(../images/btn-edit-coordination.png); }
 
 /*# sourceMappingURL=main.css.map */

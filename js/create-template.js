@@ -60,17 +60,14 @@ $(document).ready(function () {
 
 
 
-    /* Step 2 */
+    /* ---------------------------------------- Step 2 ---------------------------------------- */
+	var canToggle = true;
     $('#btn-add-field').click(function () {
 		/* For BE
         $.ajax({
             type: "GET",
             url: "/Template/AddField",
             success: function (data) {
-                $('.box-field').each(function () {
-                    $(this).children('.box-field-body').css("display", "none");
-                    $(this).find('.glyphicon').removeClass('glyphicon-menu-up');
-                });
                 $('#box-fields').append(data);
                 drawStatus = 1;
             },
@@ -79,47 +76,19 @@ $(document).ready(function () {
         });
 		*/
 		/* For FE */
-		$('#box-fields .box-field').each(function () {
-			$(this).children('.box-field-body').css("display", "none");
-			$(this).find('.glyphicon').removeClass('glyphicon-menu-up');
-		});
 		$('#box-fields').append($('#box-field-temp').html());
 		var id = generateId(30);
 		$('#box-fields .box-field').last().attr('id', id);
-		drawStatus = 1;
+		drawStatus = 0;
 		/* */
     });
-
-    $(document).on("click", ".btn-set-coordination", function(e){
-        drawStatus = 0;
-		var rect = {'id': $(this).closest('.box-field').attr('id'), 'rect': currentRect};
-        lstRect.push(rect);
-        initRect();
-    });
 	
-	$(document).on("click", ".btn-delete-field", function(e){
-        drawStatus = 0;
-		var id = $(this).closest('.box-field').attr('id');
-		lstRect = lstRect.filter(function(item){
-			return item.id != id; 
-		});
-		draw();
-		$('#' + id).remove();
-        initRect();
-    });
-
-    var canToggle = true;
-    $(document).on("click", ".box-field-header", function(e){
+	$(document).on("click", ".box-field", function(e) {
+		collapseFields($(this).attr('id'));
+	});
+	
+    $(document).on("click", ".box-field-header", function(e) {
         if (canToggle) {
-            var boxFields = $('.box-field');
-            var currentHeader = $(this)[0];
-            $('.box-field').each(function () {
-                var header = $(this).children('.box-field-header')[0];
-                if (currentHeader != header) {
-                    $(this).children('.box-field-body').css("display", "none");
-                }
-                $(this).find('.glyphicon').removeClass('glyphicon-menu-up');
-            });
             if ($(this).parent().children('.box-field-body').css('display') == 'block') {
                 $(this).find('.glyphicon').removeClass('glyphicon-menu-up');
             } else {
@@ -131,8 +100,55 @@ $(document).ready(function () {
         }
     });
 
-    $('.field-name').click(function () {
+	$(document).on("click", ".field-name", function(e) {
         canToggle = false;
+    });
+
+    $(document).on("click", ".btn-set-coordination", function(e) {
+        drawStatus = 1;
+		clearCurrentRect();
+		displayCoordinationBtns(this, "setting");
+		
+		/* Check and display buttons of all fields */
+		var id = $(this).closest('.box-field').attr('id');
+		$('.box-field').each(function () {
+			if ($(this).attr("id") != id) {
+				var isSet = checkCoordinationIsSet($(this).attr("id"));
+				if (isSet) {
+					displayCoordinationBtns($(this).find(".btn-set-coordination"), "set");
+				} else {
+					displayCoordinationBtns($(this).find(".btn-set-coordination"), "new");
+				}
+			}
+		});
+    });
+	
+	$(document).on("click", ".btn-save-coordination", function(e) {
+		buildRectList($(this).closest('.box-field').attr('id'), false);
+		displayCoordinationBtns(this, "set");
+    });
+	
+	$(document).on("click", ".btn-cancel-coordination", function(e) {
+		buildRectList($(this).closest('.box-field').attr('id'), true);
+		var isSet = checkCoordinationIsSet($(this).closest('.box-field').attr('id'));
+		if (isSet) {
+			displayCoordinationBtns(this, "set");
+		} else {
+			displayCoordinationBtns(this, "new");
+		}
+    });
+	
+	$(document).on("click", ".btn-edit-coordination", function(e) {
+		drawStatus = 2;
+		getRectangeForEdit($(this).closest('.box-field').attr('id'));
+		displayCoordinationBtns(this, "setting");
+    });
+	
+	$(document).on("click", ".btn-delete-field", function(e) {
+        drawStatus = 0;
+		removeItemOutOfRectList($(this).closest('.box-field').attr('id'));
+		clearCurrentRect();
+		$('#' + $(this).closest('.box-field').attr('id')).remove();
     });
 });
 
@@ -224,14 +240,54 @@ var uploadSampleFile = function (files) {
 
 
 
+/* ---------------------------------------- Step 2 ---------------------------------------- */
+
+/* Collapse all fields which have set */
+function collapseFields (currentId) {
+	for (var i = 0; i < lstRect.length; i++) {
+		if (lstRect[i].id != currentId) {
+			$('#' + lstRect[i].id).children('.box-field-body').css("display", "none");
+			$('#' + lstRect[i].id).find('.glyphicon').removeClass('glyphicon-menu-up');
+		}
+    }
+};
+
+function displayCoordinationBtns (that, stt) {
+	switch (stt) {
+		case "new":
+			$(that).parent().children(".btn-set-coordination").css("display", "inline-block");
+			$(that).parent().children(".btn-save-coordination").css("display", "none");
+			$(that).parent().children(".btn-cancel-coordination").css("display", "none");
+			$(that).parent().children(".lbl-edit-coordination").css("display", "none");
+			$(that).parent().children(".btn-edit-coordination").css("display", "none");
+			break;
+		case "setting":
+			$(that).parent().children(".btn-set-coordination").css("display", "none");
+			$(that).parent().children(".btn-save-coordination").css("display", "inline-block");
+			$(that).parent().children(".btn-cancel-coordination").css("display", "inline-block");
+			$(that).parent().children(".lbl-edit-coordination").css("display", "none");
+			$(that).parent().children(".btn-edit-coordination").css("display", "none");
+			break;
+		case "set":
+			$(that).parent().children(".btn-set-coordination").css("display", "none");
+			$(that).parent().children(".btn-save-coordination").css("display", "none");
+			$(that).parent().children(".btn-cancel-coordination").css("display", "none");
+			$(that).parent().children(".lbl-edit-coordination").css("display", "inline-block");
+			$(that).parent().children(".btn-edit-coordination").css("display", "inline-block");
+			break;
+	}
+};
+
+
+
 /* ---------------------------------------- Common ---------------------------------------- */
 function generateId (len){
-        var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
-        var passwordLength = len || 8;
-        var Id = "";
-        for (var x = 0; x < passwordLength; x++) {
-            var i = Math.floor(Math.random() * chars.length);
-            Id += chars.charAt(i);
-        };
-        return Id;
-    }
+	var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
+	var passwordLength = len || 8;
+	var Id = "";
+	for (var x = 0; x < passwordLength; x++) {
+		var i = Math.floor(Math.random() * chars.length);
+		Id += chars.charAt(i);
+	};
+	return Id;
+};
