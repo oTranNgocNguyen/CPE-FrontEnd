@@ -103,7 +103,7 @@
 			
 			
 			<!-- Step 1 -->
-			<div id="box-step-one" class="row mg-0">
+			<div id="box-step-one" class="row mg-0 box-steps">
 				<p id="title-upload-file">Sample file</p>
 				<form method="post" action="" enctype="multipart/form-data">
 					<div class="box-upload-file">
@@ -118,7 +118,7 @@
 					</div>
 					<div class="box-btn row mg-0">
 						<div class="pull-right">
-							<button id="btn-upload-file" type="button">Next</button>
+							<button id="btn-upload-file" type="button" class="btn-create-default btn-next">Next</button>
 						</div>
 					</div>
 				</form>
@@ -126,7 +126,7 @@
 			
 			
 			<!-- Step 2 -->
-			<div id="box-step-two" class="row mg-0" style="display:none">
+			<div id="box-step-two" class="row mg-0 box-steps" style="display:none">
 				<div class="row mg-0">
 					<div class="col-md-6 col-sm-6 col-xs-6 pad-left-0">
 						<p id="title-detected-fields">Detected fields</p>
@@ -155,6 +155,12 @@
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6">
 						<canvas id="canvas" width="500" height="500" style="border: 1px solid #ccc"></canvas>
+					</div>
+				</div>
+				<div class="box-btn row mg-0">
+					<div class="pull-right">
+						<button id="btn-upload-file" type="button" class="btn-create-default btn-back">Back</button>
+						<button id="btn-upload-file" type="button" class="btn-create-default btn-next">Next</button>
 					</div>
 				</div>
 			</div>

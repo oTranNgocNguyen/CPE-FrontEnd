@@ -216,130 +216,134 @@
       font-size: 28px;
       font-weight: 700; }
 
-#box-step-one {
+.box-steps {
   margin-top: 20px; }
-  #box-step-one * {
-    text-align: center; }
-  #box-step-one #title-upload-file {
-    text-align: left;
-    font-weight: 700; }
-  #box-step-one .box-upload-file {
-    height: 150px;
-    border: 2px dashed #d7d7d7;
-    border-radius: 4px;
-    position: relative;
-    -webkit-transition: background-color .15s linear;
-    transition: background-color .15s linear; }
-    #box-step-one .box-upload-file.is-dragover {
-      background-color: #f5f5f5; }
-    #box-step-one .box-upload-file .box-input-file {
-      margin-top: 20px; }
-      #box-step-one .box-upload-file .box-input-file p {
-        font-size: 20px;
-        color: #BCBCBC;
-        text-align: center;
-        margin: 0px;
-        line-height: 25px; }
-      #box-step-one .box-upload-file .box-input-file .input-file {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1; }
-      #box-step-one .box-upload-file .box-input-file label {
-        border: 1px solid #d7d7d7;
-        border-radius: 4px;
-        margin-top: 10px;
-        padding: 10px 20px;
-        font-weight: normal;
-        cursor: pointer; }
-      #box-step-one .box-upload-file .box-input-file .file-selected {
-        color: #169bd5; }
-        #box-step-one .box-upload-file .box-input-file .file-selected.file-error {
-          color: #f00; }
-    #box-step-one .box-upload-file .box-uploading {
-      display: none; }
-  #box-step-one .box-btn {
+  .box-steps .box-btn {
     margin-top: 30px; }
-    #box-step-one .box-btn #btn-upload-file {
+    .box-steps .box-btn .btn-create-default {
       width: 140px;
       height: 40px;
-      border: none;
       border-radius: 5px;
-      background-color: #169bd5;
-      color: #fff;
       text-transform: uppercase; }
+    .box-steps .box-btn .btn-next {
+      border: none;
+      background-color: #169bd5;
+      color: #fff; }
+    .box-steps .box-btn .btn-back {
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #000; }
 
-#box-step-two {
-  margin-top: 20px; }
-  #box-step-two #title-detected-fields, #box-step-two #title-sample-file {
-    font-weight: 700; }
-  #box-step-two #box-detected-fields {
-    border: 1px solid #d7d7d7;
-    min-height: 500px; }
-    #box-step-two #box-detected-fields #box-fields-header {
-      padding: 6px 0px;
-      border-bottom: 2px solid #ccc; }
-      #box-step-two #box-detected-fields #box-fields-header div {
-        padding: 0px;
+#box-step-one * {
+  text-align: center; }
+#box-step-one #title-upload-file {
+  text-align: left;
+  font-weight: 700; }
+#box-step-one .box-upload-file {
+  height: 150px;
+  border: 2px dashed #d7d7d7;
+  border-radius: 4px;
+  position: relative;
+  -webkit-transition: background-color .15s linear;
+  transition: background-color .15s linear; }
+  #box-step-one .box-upload-file.is-dragover {
+    background-color: #f5f5f5; }
+  #box-step-one .box-upload-file .box-input-file {
+    margin-top: 20px; }
+    #box-step-one .box-upload-file .box-input-file p {
+      font-size: 20px;
+      color: #BCBCBC;
+      text-align: center;
+      margin: 0px;
+      line-height: 25px; }
+    #box-step-one .box-upload-file .box-input-file .input-file {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1; }
+    #box-step-one .box-upload-file .box-input-file label {
+      border: 1px solid #d7d7d7;
+      border-radius: 4px;
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-weight: normal;
+      cursor: pointer; }
+    #box-step-one .box-upload-file .box-input-file .file-selected {
+      color: #169bd5; }
+      #box-step-one .box-upload-file .box-input-file .file-selected.file-error {
+        color: #f00; }
+  #box-step-one .box-upload-file .box-uploading {
+    display: none; }
+
+#box-step-two #title-detected-fields, #box-step-two #title-sample-file {
+  font-weight: 700; }
+#box-step-two #box-detected-fields {
+  border: 1px solid #d7d7d7;
+  min-height: 500px; }
+  #box-step-two #box-detected-fields #box-fields-header {
+    padding: 6px 0px;
+    border-bottom: 2px solid #ccc; }
+    #box-step-two #box-detected-fields #box-fields-header div {
+      padding: 0px;
+      font-weight: 700;
+      height: 29px;
+      line-height: 29px; }
+    #box-step-two #box-detected-fields #box-fields-header #btn-add-field {
+      width: 29px;
+      height: 29px;
+      border: none;
+      background: url(../images/btn-add-field.png); }
+  #box-step-two #box-detected-fields #box-fields div {
+    padding: 0px; }
+  #box-step-two #box-detected-fields #box-fields .box-field {
+    line-height: 36px; }
+    #box-step-two #box-detected-fields #box-fields .box-field:nth-child(odd) {
+      background-color: #f2f2f2; }
+    #box-step-two #box-detected-fields #box-fields .box-field:nth-child(even) {
+      background-color: #fff; }
+    #box-step-two #box-detected-fields #box-fields .box-field .box-field-header {
+      padding-left: 5px; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header:hover {
+        background-color: #f7f7f7; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .field-name {
+        width: 80%;
+        height: 24px; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .desc-preview {
         font-weight: 700;
-        height: 29px;
-        line-height: 29px; }
-      #box-step-two #box-detected-fields #box-fields-header #btn-add-field {
-        width: 29px;
-        height: 29px;
+        color: #006600;
+        margin-bottom: 0px;
+        display: inline-block; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .btn-delete-field {
+        width: 17px;
+        height: 17px;
+        line-height: 17px;
+        margin-top: 9px;
+        margin-right: 5px;
         border: none;
-        background: url(../images/btn-add-field.png); }
-    #box-step-two #box-detected-fields #box-fields div {
-      padding: 0px; }
-    #box-step-two #box-detected-fields #box-fields .box-field {
-      line-height: 36px; }
-      #box-step-two #box-detected-fields #box-fields .box-field:nth-child(odd) {
-        background-color: #f2f2f2; }
-      #box-step-two #box-detected-fields #box-fields .box-field:nth-child(even) {
-        background-color: #fff; }
-      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header {
-        padding-left: 5px; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-header:hover {
-          background-color: #f7f7f7; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .field-name {
-          width: 80%;
-          height: 24px; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .desc-preview {
-          font-weight: 700;
-          color: #006600;
-          margin-bottom: 0px;
-          display: inline-block; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .btn-delete-field {
-          width: 17px;
-          height: 17px;
-          line-height: 17px;
-          margin-top: 9px;
-          margin-right: 5px;
-          border: none;
-          background: url(../images/btn-delete-field.png); }
-      #box-step-two #box-detected-fields #box-fields .box-field .box-field-body {
-        padding-left: 5px; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .field-type {
-          padding: 2px;
-          width: 200px; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-set-coordination, #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-save-coordination, #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-cancel-coordination {
-          height: 30px;
-          line-height: 30px;
-          color: #fff;
-          border: none;
-          border-radius: 5px;
-          background-color: #169bd5;
-          padding-right: 10px; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .lbl-edit-coordination {
-          margin: 0px;
-          font-weight: 700; }
-        #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-edit-coordination {
-          width: 22px;
-          height: 17px;
-          line-height: 17px;
-          border: none;
-          background: url(../images/btn-edit-coordination.png); }
+        background: url(../images/btn-delete-field.png); }
+    #box-step-two #box-detected-fields #box-fields .box-field .box-field-body {
+      padding-left: 5px; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .field-type {
+        padding: 2px;
+        width: 200px; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-set-coordination, #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-save-coordination, #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-cancel-coordination {
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        background-color: #169bd5;
+        padding-right: 10px; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .lbl-edit-coordination {
+        margin: 0px;
+        font-weight: 700; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .btn-edit-coordination {
+        width: 22px;
+        height: 17px;
+        line-height: 17px;
+        border: none;
+        background: url(../images/btn-edit-coordination.png); }
 
 /*# sourceMappingURL=main.css.map */

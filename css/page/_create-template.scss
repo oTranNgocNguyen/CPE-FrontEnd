@@ -41,8 +41,30 @@
 	}
 }
 
-#box-step-one {
+.box-steps {
 	margin-top: 20px;
+	.box-btn {
+		margin-top: 30px;
+		.btn-create-default {
+			width: 140px;
+			height: 40px;
+			border-radius: 5px;
+			text-transform: uppercase;
+		}
+		.btn-next {
+			border: none;
+			background-color: #169bd5;
+			color: #fff;
+		}
+		.btn-back {
+			border: 1px solid #ccc;
+			background-color: #fff;
+			color: #000;
+		}
+	}
+}
+
+#box-step-one {
 	* {
 		text-align: center;
 	}
@@ -97,22 +119,9 @@
 			display: none;
 		}
 	}
-	.box-btn {
-		margin-top: 30px;
-		#btn-upload-file {
-			width: 140px;
-			height: 40px;
-			border: none;
-			border-radius: 5px;
-			background-color: #169bd5;
-			color: #fff;
-			text-transform: uppercase;
-		}
-	}
 }
 
 #box-step-two {
-	margin-top: 20px;
 	#title-detected-fields, #title-sample-file {
 		font-weight: 700;
 	}
