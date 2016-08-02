@@ -189,10 +189,10 @@
     border: 1px solid #d7d7d7;
     background-color: #F9F9F9;
     position: relative; }
-    #tab-create-template .create-template-tab-item:hover, #tab-create-template .create-template-tab-item.actived {
-      cursor: pointer;
+    #tab-create-template .create-template-tab-item.actived {
       background-color: #F0F0F0; }
-      #tab-create-template .create-template-tab-item:hover .create-template-tab-number, #tab-create-template .create-template-tab-item.actived .create-template-tab-number {
+      #tab-create-template .create-template-tab-item.actived .create-template-tab-number {
+        color: #fff;
         background-color: #00CC66; }
     #tab-create-template .create-template-tab-item * {
       text-align: center; }
@@ -267,7 +267,9 @@
       height: 40px;
       border: none;
       border-radius: 5px;
-      background-color: #169bd5; }
+      background-color: #169bd5;
+      color: #fff;
+      text-transform: uppercase; }
 
 #box-step-two {
   margin-top: 20px; }

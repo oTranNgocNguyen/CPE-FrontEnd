@@ -1,19 +1,3 @@
-var isAdvancedUpload = function () {
-    var div = document.createElement('div');
-    return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
-}();
-
-var showFiles = function (files) {
-    if (files.length > 1) {
-        $('.file-selected').html('Please choose only one sample file.');
-        $('.file-selected').addClass('file-error');
-    } else {
-        $('.file-selected').html(files[0].name);
-        $('.file-selected').removeClass('file-error');
-    }
-};
-
-
 $(document).ready(function () {
     var form = $('.box-upload-file')[0];
     var input = form.querySelector('input[type="file"]');
@@ -62,6 +46,7 @@ $(document).ready(function () {
 
     /* ---------------------------------------- Step 2 ---------------------------------------- */
     var canToggle = true;
+	var currentId;
     $('#btn-add-field').click(function () {
         /* For BE
         $.ajax({
@@ -79,7 +64,6 @@ $(document).ready(function () {
         $('#box-fields').append($('#box-field-temp').html());
         var id = generateId(30);
         $('#box-fields .box-field').last().attr('id', id);
-        drawStatus = 0;
         /* */
     });
 
@@ -105,22 +89,24 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".btn-set-coordination", function (e) {
+        buildRectList($(this).closest('.box-field').attr('id'), true);
         drawStatus = 1;
-        clearCurrentRect();
-        displayCoordinationBtns(this, "setting");
+        currentId = $(this).closest('.box-field').attr('id');
 
-        /* Check and display buttons of all fields */
-        var id = $(this).closest('.box-field').attr('id');
-        $('.box-field').each(function () {
-            if ($(this).attr("id") != id) {
-                var isSet = checkCoordinationIsSet($(this).attr("id"));
-                if (isSet) {
-                    displayCoordinationBtns($(this).find(".btn-set-coordination"), "set");
-                } else {
-                    displayCoordinationBtns($(this).find(".btn-set-coordination"), "new");
-                }
-            }
-        });
+        // Display buttons and labels of coordination of all fields
+        displayCoordinationBtns(this, "setting");
+        displayCoordinationBtnsOfAllField($(this).closest('.box-field').attr('id'));
+    });
+
+    $(document).on("click", ".btn-edit-coordination", function (e) {
+        buildRectList($(this).closest('.box-field').attr('id'), true);
+        drawStatus = 2;
+        getRectangeForEdit($(this).closest('.box-field').attr('id'));
+        currentId = $(this).closest('.box-field').attr('id');
+
+        // Display buttons and labels of coordination of all fields
+        displayCoordinationBtns(this, "setting");
+        displayCoordinationBtnsOfAllField($(this).closest('.box-field').attr('id'));
     });
 
     $(document).on("click", ".btn-save-coordination", function (e) {
@@ -138,19 +124,19 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on("click", ".btn-edit-coordination", function (e) {
-        drawStatus = 2;
-        getRectangeForEdit($(this).closest('.box-field').attr('id'));
-        displayCoordinationBtns(this, "setting");
-    });
-
     $(document).on("click", ".btn-delete-field", function (e) {
-        drawStatus = 0;
+        if ($(this).closest('.box-field').attr('id') == currentId) {
+            drawStatus = 0;
+            clearCurrentRect();
+            edittingRect = false;
+        }
         removeItemOutOfRectList($(this).closest('.box-field').attr('id'));
-        clearCurrentRect();
+        draw();
         $('#' + $(this).closest('.box-field').attr('id')).remove();
     });
 });
+
+
 
 /* ---------------------------------------- Tab ---------------------------------------- */
 var changeTab = function () {
@@ -191,24 +177,49 @@ var changeTab = function () {
     }
 }
 
+
+
 /* ---------------------------------------- Step 1 ---------------------------------------- */
+var maxFileSize = (4 * 1024 * 1024);
+
+var isAdvancedUpload = function () {
+    var div = document.createElement('div');
+    return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+}();
+
+var showFiles = function (files) {
+    if (files.length > 1) {
+        $('.file-selected').html(messageList.EM_004);
+        $('.file-selected').addClass('file-error');
+    } else {
+        $('.file-selected').html(files[0].name);
+        $('.file-selected').removeClass('file-error');
+    }
+};
+
 var validateSampleFile = function (files) {
     // Validate number of file
     if (files.length > 1) {
-        $('.file-selected').html('Please choose only one sample file.');
+        $('.file-selected').html(messageList.EM_004);
         $('.file-selected').addClass('file-error');
         return false;
     } else if (files.length == 0) {
-        $('.file-selected').html('Please choose a sample file.');
+        $('.file-selected').html(messageList.EM_001);
         $('.file-selected').addClass('file-error');
         return false;
     } else {
         // Validate type of file
         var file = files[0];
         if (file.type.indexOf('image/') > -1 || file.type.indexOf('application/pdf') > -1) {
+            if (file.size > maxFileSize) {
+                $('.file-selected').html(messageList.EM_003);
+                $('.file-selected').addClass('file-error');
+            } else {
+                return true;
+            }
             return true;
         } else {
-            $('.file-selected').html('Please choose image file or pdf file.');
+            $('.file-selected').html(messageList.EM_002);
             $('.file-selected').addClass('file-error');
             return false;
         }
@@ -242,8 +253,8 @@ var uploadSampleFile = function (files) {
 
 /* ---------------------------------------- Step 2 ---------------------------------------- */
 
-/* Collapse all fields which have set */
-function collapseFields(currentId) {
+// Collapse all fields which have set
+var collapseFields = function (currentId) {
     for (var i = 0; i < lstRect.length; i++) {
         if (lstRect[i].id != currentId) {
             $('#' + lstRect[i].id).children('.box-field-body').css("display", "none");
@@ -252,7 +263,11 @@ function collapseFields(currentId) {
     }
 };
 
-function displayCoordinationBtns(that, stt) {
+// Display buttons and labels of coordination of a field
+// "new": display button "Set"
+// "setting" (same for "editting"): display button "Yes" and "Cancel"
+// "set": display label and button "Edit"
+var displayCoordinationBtns = function (that, stt) {
     switch (stt) {
         case "new":
             $(that).parent().children(".btn-set-coordination").css("display", "inline-block");
@@ -278,10 +293,25 @@ function displayCoordinationBtns(that, stt) {
     }
 };
 
+// Display buttons and labels of coordination of all fields (except current field which is determined by id)
+// This function is used to change status of coordination of all fields from "setting" to "new"/"set" when user click buttons "Set"/"Edit"
+var displayCoordinationBtnsOfAllField = function (id) {
+    $('.box-field').each(function () {
+        if ($(this).attr("id") != id) {
+            var isSet = checkCoordinationIsSet($(this).attr("id"));
+            if (isSet) {
+                displayCoordinationBtns($(this).find(".btn-set-coordination"), "set");
+            } else {
+                displayCoordinationBtns($(this).find(".btn-set-coordination"), "new");
+            }
+        }
+    });
+}
+
 
 
 /* ---------------------------------------- Common ---------------------------------------- */
-function generateId(len) {
+var generateId = function (len) {
     var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
     var passwordLength = len || 8;
     var Id = "";

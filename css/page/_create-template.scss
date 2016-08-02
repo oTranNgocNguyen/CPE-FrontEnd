@@ -6,10 +6,10 @@
 		border: 1px solid #d7d7d7;
 		background-color: #F9F9F9;
 		position: relative;
-		&:hover, &.actived {
-			cursor: pointer;
+		&.actived {
 			background-color: #F0F0F0;
 			.create-template-tab-number {
+				color: #fff;
 				background-color: #00CC66;
 			}
 		}
@@ -105,6 +105,8 @@
 			border: none;
 			border-radius: 5px;
 			background-color: #169bd5;
+			color: #fff;
+			text-transform: uppercase;
 		}
 	}
 }

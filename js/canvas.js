@@ -327,10 +327,11 @@ function mouseMove(e) {
 // Draw
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "#FF0000";
+    ctx.strokeStyle = "#0000FF";
     for (var i = 0; i < lstRect.length; i++) {
         ctx.strokeRect(lstRect[i].rect.x, lstRect[i].rect.y, lstRect[i].rect.w, lstRect[i].rect.h);
     }
+	ctx.strokeStyle = "#FF0000";
     ctx.strokeRect(currentRect.x, currentRect.y, currentRect.w, currentRect.h);
     if (drawStatus == 2) {
         if (currentHandle) {
@@ -371,6 +372,9 @@ function removeItemOutOfRectList(id) {
 }
 
 // Build rectange lists
+// Two case:
+// Case 1: Click button "Cancel" or "Set"/"Edit" (user click "Set"/"Edit" of a field when user is setting for another field) -> check edittingRect: If it is exist, revert it
+// Case 2: Click button "Save" -> push currentRect to rectange lists
 function buildRectList(id, isCancel) {
     var rect;
     drawStatus = 0;
@@ -378,13 +382,12 @@ function buildRectList(id, isCancel) {
         if (edittingRect) {
             lstRect.push(edittingRect);
         }
-        clearCurrentRect();
     } else {
         rect = { 'id': id, 'rect': currentRect };
         lstRect.push(rect);
-        initRect();
     }
     edittingRect = false;
+	clearCurrentRect();
 }
 
 // Clear current rectange and re-draw
