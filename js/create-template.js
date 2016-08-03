@@ -46,7 +46,7 @@ $(document).ready(function () {
 
     /* ---------------------------------------- Step 2 ---------------------------------------- */
     var canToggle = true;
-	var currentId;
+    var currentId;
     $('#btn-add-field').click(function () {
         /* For BE
         $.ajax({
@@ -116,7 +116,7 @@ $(document).ready(function () {
             buildRectList($(this).closest('.box-field').attr('id'), false);
             // getPreviewForField();
             displayCoordinationBtns(this, "set");
-		}
+        }
     });
 
     $(document).on("click", ".btn-cancel-coordination", function (e) {
@@ -139,8 +139,8 @@ $(document).ready(function () {
         draw();
         $('#' + $(this).closest('.box-field').attr('id')).remove();
     });
-	
-	$(document).on("click", "#btn-step2-next", function (e) {
+
+    $(document).on("click", "#btn-step2-next", function (e) {
         collapseFields();
         var valid = validateStep2();
         if (valid) {
@@ -151,21 +151,21 @@ $(document).ready(function () {
 
 
     /* ---------------------------------------- Step 3 ---------------------------------------- */
-	$('#box-verification button').click(function(){
-		if($(this).hasClass('locked_active') || $(this).hasClass('unlocked_inactive')){
-			/* code to do when unlocking */
-			console.log('Switched on.');
-		}else{
-			/* code to do when locking */
-			console.log('Switched off.');
-		}
-		
-		/* reverse locking status */
-		$('#box-verification button').eq(0).toggleClass('unlocked_inactive unlocked_active btn-info btn-default');
-		$('#box-verification button').eq(1).toggleClass('locked_inactive locked_active btn-default btn-info');
-	});
-	
-	$(document).on("click", "#btn-step3-next", function (e) {
+    $('#box-verification button').click(function () {
+        if ($(this).hasClass('locked_active') || $(this).hasClass('unlocked_inactive')) {
+            /* code to do when unlocking */
+            console.log('Switched on.');
+        } else {
+            /* code to do when locking */
+            console.log('Switched off.');
+        }
+
+        /* reverse locking status */
+        $('#box-verification button').eq(0).toggleClass('unlocked_inactive unlocked_active btn-info btn-default');
+        $('#box-verification button').eq(1).toggleClass('locked_inactive locked_active btn-default btn-info');
+    });
+
+    $(document).on("click", "#btn-step3-next", function (e) {
         var valid = validateStep3();
         if (valid) {
             changeTab();
@@ -219,7 +219,7 @@ var changeTab = function () {
 /* ---------------------------------------- Step 1 ---------------------------------------- */
 var maxFileSize = (4 * 1024 * 1024);
 var sourceId;
-var acceptableFileTypes = 
+var acceptableFileTypes =
 {
     'application/pdf': true,
     'image/png': true,
@@ -358,11 +358,11 @@ var displayCoordinationBtnsOfAllField = function (id) {
 // Validate coordination before call OCR
 var validateCoordination = function (that, rect) {
     if (rect.x == 0 && rect.y == 0 && rect.w == 0 && rect.h == 0) {
-		$(that).closest(".box-field").find(".txt-coordination-error").css("display", "inline-block");
+        $(that).closest(".box-field").find(".txt-coordination-error").css("display", "inline-block");
         $(that).closest(".box-field").find(".txt-coordination-error").html(messageList.EM_011);
         return false;
     } else {
-		$("#box-step-two .txt-coordination-error").css("display", "none");
+        $("#box-step-two .txt-coordination-error").css("display", "none");
         return true;
     }
 }
@@ -393,49 +393,49 @@ var getPreviewForField = function () {
 };
 
 var validateStep2 = function () {
-	var valid = true;
-	var length = $("#box-fields .box-field").length;
-	if (length == 0) {
-		valid = false;
-		alert(messageList.EM_008);
-	}
+    var valid = true;
+    var length = $("#box-fields .box-field").length;
+    if (length == 0) {
+        valid = false;
+        alert(messageList.EM_008);
+    }
     $("#box-fields .box-field").each(function () {
-		var localValid = true;
+        var localValid = true;
 
         var name = $(this).find(".txt-field-name")[0];
         if (name.value.trim().length == 0) {
-			$(this).find(".txt-field-name").addClass("error");
+            $(this).find(".txt-field-name").addClass("error");
             $(this).find(".txt-field-name-error").css("display", "block");
             $(this).find(".txt-field-name-error").html(messageList.EM_009);
             localValid = false;
         } else if (name.value.trim().length > 50) {
-			$(this).find(".txt-field-name").addClass("error");
+            $(this).find(".txt-field-name").addClass("error");
             $(this).find(".txt-field-name-error").css("display", "block");
             $(this).find(".txt-field-name-error").html(messageList.EM_010);
             localValid = false;
         } else {
-			$(this).find(".txt-field-name").removeClass("error");
+            $(this).find(".txt-field-name").removeClass("error");
             $(this).find(".txt-field-name-error").css("display", "none");
         }
 
         var isSet = checkCoordinationIsSet($(this).attr("id"));
-		if (!isSet) {
-			localValid = false;
-			$(this).find(".txt-coordination-error").css("display", "inline-block");
-			$(this).find(".txt-coordination-error").html(messageList.EM_012);
-		} else {
-			$(this).find(".txt-coordination-error").css("display", "none");
-		}
-		
+        if (!isSet) {
+            localValid = false;
+            $(this).find(".txt-coordination-error").css("display", "inline-block");
+            $(this).find(".txt-coordination-error").html(messageList.EM_012);
+        } else {
+            $(this).find(".txt-coordination-error").css("display", "none");
+        }
+
         if (!localValid) {
             if ($(this).children(".box-field-body").css("display") == "none") {
                 $(this).find(".glyphicon").addClass("glyphicon-menu-up");
-				$(this).children(".box-field-body").toggle("fast");
+                $(this).children(".box-field-body").toggle("fast");
             }
-			valid = false;
+            valid = false;
         }
     });
-	return valid;
+    return valid;
 }
 
 
@@ -443,7 +443,7 @@ var validateStep2 = function () {
 /* ---------------------------------------- Step 3 ---------------------------------------- */
 var validateStep3 = function () {
     var valid = true;
-	
+
     var templateName = $("#box-step-three #txt-template-name")[0];
     if (templateName.value.trim().length == 0) {
         $("#box-step-three #txt-template-name").addClass("error");
@@ -459,8 +459,8 @@ var validateStep3 = function () {
         $("#box-step-three #txt-template-name").removeClass("error");
         $("#box-step-three #txt-template-name-error").css("display", "none");
     }
-	
-	var templateDesc = $("#box-step-three #txt-template-description")[0];
+
+    var templateDesc = $("#box-step-three #txt-template-description")[0];
     if (templateDesc.value.trim().length == 0) {
         $("#box-step-three #txt-template-description").addClass("error");
         $("#box-step-three #txt-template-description-error").css("display", "block");
@@ -475,7 +475,7 @@ var validateStep3 = function () {
         $("#box-step-three #txt-template-description").removeClass("error");
         $("#box-step-three #txt-template-description-error").css("display", "none");
     }
-	
+
     return valid;
 }
 
