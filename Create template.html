@@ -153,14 +153,105 @@
 						<div id="box-fields" class="row mg-0">
 						</div>
 					</div>
-					<div class="col-md-6 col-sm-6 col-xs-6">
-						<canvas id="canvas" width="500" height="500" style="border: 1px solid #ccc"></canvas>
+					<div class="col-md-6 col-sm-6 col-xs-6 pad-right-0">
+						<div class="pull-right">
+							<canvas id="canvas" width="480" height="500" style="border: 1px solid #ccc"></canvas>
+						</div>
 					</div>
 				</div>
 				<div class="box-btn row mg-0">
 					<div class="pull-right">
-						<button id="btn-upload-file" type="button" class="btn-create-default btn-back">Back</button>
-						<button id="btn-upload-file" type="button" class="btn-create-default btn-next">Next</button>
+						<button id="btn-step2-back" type="button" class="btn-create-default btn-back">Back</button>
+						<button id="btn-step2-next" type="button" class="btn-create-default btn-next">Next</button>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Step 3 -->
+			<div id="box-step-three" class="row mg-0 box-steps" style="display:none">
+				<div class="row mg-0">
+					<div class="row mg-0">
+						<div class="col-md-12 col-sm-12 col-xs-12 pad-left-0 pad-right-0">
+							<p id="title-template-name">Template name</p>
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12 pad-left-0 pad-right-0">
+							<input type="text" name="template-name" id="txt-template-name">
+						</div>
+						<div id="txt-template-name-error" class="col-md-12 col-sm-12 col-xs-12 pad-left-0 template-error">
+						</div>
+					</div>
+					<div class="row mg-0 box">
+						<div class="col-md-12 col-sm-12 col-xs-12 pad-left-0 pad-right-0">
+							<p id="title-template-description">Description</p>
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12 pad-left-0 pad-right-0">
+							<textarea id="txt-template-description"></textarea>
+						</div>
+						<div id="txt-template-description-error" class="col-md-12 col-sm-12 col-xs-12 pad-left-0 template-error">
+						</div>
+					</div>
+					<div class="row mg-0 box">
+						<div class="col-md-12 col-sm-12 col-xs-12 pad-left-0 pad-right-0">
+							<div class="btn-group" id="box-verification">
+								<button type="button" class="btn btn-info unlocked_active">ON</button>
+								<button type="button" class="btn btn-default locked_inactive">OFF</button>
+							</div>
+							User Verification Required
+						</div>
+					</div>
+				</div>
+				<div class="box-btn row mg-0">
+					<div class="pull-right">
+						<button id="btn-step3-back" type="button" class="btn-create-default btn-back">Back</button>
+						<button id="btn-step3-next" type="button" class="btn-create-default btn-next">Next</button>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Step 4 -->
+			<div id="box-step-four" class="row mg-0 box-steps" style="display:none">
+				<div class="row mg-0">
+					<div class="col-md-6 col-sm-6 col-xs-6 pad-left-0">
+						<div class="row mg-0">
+							<p id="title-template-name">Template name</p>
+						</div>
+						<div class="row mg-0">
+							<p id="title-template-description">Description of the template will be shown here as preview option. This template is used for PO and Registration Form . Description of the template will be shown here as preview option. This template is used for PO and Registration Form.</p>
+						</div>
+					</div>
+					<div id="box-defined-fields" class="col-md-6 col-sm-6 col-xs-6">
+						<div id="box-defined-fields-header" class="row mg-0">
+							Field Name
+						</div>
+						<div id="box-defined-fields-body" class="row mg-0">
+							<div class="box-defined-field" class="row mg-0">
+								Ricoh Branch /Dealer
+							</div>
+							<div class="box-defined-field" class="row mg-0">
+								Service Team Email
+							</div>
+							<div class="box-defined-field" class="row mg-0">
+								PO Number
+							</div>
+							<div class="box-defined-field" class="row mg-0">
+								Organization Name
+							</div>
+							<div class="box-defined-field" class="row mg-0">
+								Country
+							</div>
+							<div class="box-defined-field" class="row mg-0">
+								Industry
+							</div>
+							<div class="box-defined-field" class="row mg-0">
+								Remark
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-btn row mg-0">
+					<div class="pull-right">
+						<button id="btn-step3-back" type="button" class="btn-create-default btn-back">Back</button>
+						<button id="btn-step3-next" type="button" class="btn-create-default btn-next">Finish</button>
 					</div>
 				</div>
 			</div>
@@ -187,7 +278,7 @@
 				<div class="box-field-header row mg-0">
 					<div class="col-md-5 col-sm-5 col-xs-5">
 						<span class="glyphicon glyphicon-menu-down glyphicon-menu-up" aria-hidden="true"></span>
-						<input type="text" name="field-name" class="field-name">
+						<input type="text" name="field-name" class="txt-field-name">
 					</div>
 					<div class="col-md-7 col-sm-7 col-xs-7">
 						<p class="desc-preview">email@email.com</p>
@@ -197,6 +288,10 @@
 					</div>
 				</div>
 				<div class="box-field-body row mg-0">
+					<div class="row mg-0">
+						<div class="col-md-12 col-sm-12 col-xs-12 template-error txt-field-name-error">
+						</div>
+					</div>
 					<div class="row mg-0">
 						<div class="col-md-3 col-sm-3 col-xs-3">
 							Type:
@@ -217,6 +312,7 @@
 							<button class="btn-cancel-coordination" type="button" style="display:none">Cancel</button>
 							<p class="lbl-edit-coordination" style="display:none">Yes</p>
 							<button class="btn-edit-coordination" type="button" style="display:none"></button>
+							<span class="txt-coordination-error template-error"></span>
 						</div>
 					</div>
 					<div class="row mg-0">

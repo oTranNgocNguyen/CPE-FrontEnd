@@ -290,6 +290,8 @@
       font-weight: 700;
       height: 29px;
       line-height: 29px; }
+      #box-step-two #box-detected-fields #box-fields-header div:last-child {
+        line-height: normal; }
     #box-step-two #box-detected-fields #box-fields-header #btn-add-field {
       width: 29px;
       height: 29px;
@@ -307,9 +309,11 @@
       padding-left: 5px; }
       #box-step-two #box-detected-fields #box-fields .box-field .box-field-header:hover {
         background-color: #f7f7f7; }
-      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .field-name {
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .txt-field-name {
         width: 80%;
         height: 24px; }
+        #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .txt-field-name.error {
+          border: 1px solid #f00; }
       #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .desc-preview {
         font-weight: 700;
         color: #006600;
@@ -324,7 +328,8 @@
         border: none;
         background: url(../images/btn-delete-field.png); }
     #box-step-two #box-detected-fields #box-fields .box-field .box-field-body {
-      padding-left: 5px; }
+      padding-left: 5px;
+      padding-right: 5px; }
       #box-step-two #box-detected-fields #box-fields .box-field .box-field-body .field-type {
         padding: 2px;
         width: 200px; }
@@ -345,5 +350,48 @@
         line-height: 17px;
         border: none;
         background: url(../images/btn-edit-coordination.png); }
+
+#box-step-three #title-template-name, #box-step-three #title-template-description {
+  font-weight: 700; }
+#box-step-three #txt-template-name {
+  width: 50%; }
+  #box-step-three #txt-template-name.error {
+    border: 1px solid #f00; }
+#box-step-three #txt-template-description {
+  width: 100%;
+  height: 110px;
+  resize: vertical; }
+  #box-step-three #txt-template-description.error {
+    border: 1px solid #f00; }
+#box-step-three #box-verification button {
+  width: 55px; }
+#box-step-three .box {
+  margin-top: 20px; }
+
+#box-step-four #title-template-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px; }
+#box-step-four #box-defined-fields {
+  border: 1px solid #d7d7d7; }
+  #box-step-four #box-defined-fields #box-defined-fields-header {
+    padding: 6px 0px;
+    border-bottom: 2px solid #ccc; }
+  #box-step-four #box-defined-fields #box-defined-fields-body {
+    padding-bottom: 5px; }
+    #box-step-four #box-defined-fields #box-defined-fields-body .box-defined-field {
+      line-height: 36px; }
+      #box-step-four #box-defined-fields #box-defined-fields-body .box-defined-field:nth-child(odd) {
+        background-color: #f2f2f2; }
+      #box-step-four #box-defined-fields #box-defined-fields-body .box-defined-field:nth-child(even) {
+        background-color: #fff; }
+
+.template-error {
+  display: none;
+  font-size: 13px;
+  height: 20px;
+  line-height: 20px;
+  margin-bottom: 5px;
+  color: #f00; }
 
 /*# sourceMappingURL=main.css.map */
