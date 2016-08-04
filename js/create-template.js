@@ -34,10 +34,10 @@ $(document).ready(function () {
     });
 
     $("#btn-upload-file").click(function (evt) {
-        /* For BE
+        /* For BE */
         uploadSampleFile(input.files);
         /* */
-        /* For FE */
+        /* For FE
         changeTab();
         /* */
     });
@@ -48,7 +48,7 @@ $(document).ready(function () {
     var canToggle = true;
     var currentId;
     $('#btn-add-field').click(function () {
-        /* For BE
+        /* For BE */
         $.ajax({
             type: "GET",
             url: "/Template/AddField",
@@ -61,7 +61,7 @@ $(document).ready(function () {
             }
         });
         /* */
-        /* For FE */
+        /* For FE
         $('#box-fields').append($('#box-field-temp').html());
         var id = generateId(30);
         $('#box-fields .box-field').last().attr('id', id);
@@ -114,7 +114,7 @@ $(document).ready(function () {
         var valid = validateCoordination(this, currentRect);
         if (valid) {
             buildRectList($(this).closest('.box-field').attr('id'), false);
-            // getPreviewForField();
+            getPreviewForField($(this).closest('.box-field').attr('id'));
             displayCoordinationBtns(this, "set");
         }
     });
@@ -167,10 +167,25 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "#btn-step3-next", function (e) {
+        var valid = validateStep3();
+        if (valid) {
+            buildDataOfStep3();
+            displayDataForStep4();
+            changeTab();
+        }
+    });
+
+
+
+    /* ---------------------------------------- Step 4 ---------------------------------------- */
+    $(document).on("click", "#btn-step4-next", function (e) {
         $.ajax({
             type: "POST",
-            url: "/Template/CreateTemplate",
-            data: templateObject,
+            url: "/Template/Create",
+            data: {
+                template: templateObject,
+                lstField: fieldList
+            },
             headers: {
                 token: "foo"
             },
@@ -180,17 +195,6 @@ $(document).ready(function () {
                 alert("There was error uploading files!");
             }
         });
-    });
-
-
-
-    /* ---------------------------------------- Step 4 ---------------------------------------- */
-    $(document).on("click", "#btn-step4-next", function (e) {
-        var valid = validateStep3();
-        if (valid) {
-            buildDataOfStep3();
-            changeTab();
-        }
     });
 });
 
@@ -248,19 +252,20 @@ var acceptableFileTypes =
     'image/jpeg': true,
 };
 var templateObject = {
-    name: "",
-    description: "",
-    sample: "",
-    sample_extension: "",
-    fieldList: []
+    Name: "",
+    Description: "",
+    Sample: "",
+    SampleExtension: "",
 };
+var fieldList = [];
 var fieldItem = {
-    index: 0,
-    name: "",
-    area: { x: 0, y: 0, w: 0, h: 0 },
-    type: 0,
-    status: 0
+    Index: 0,
+    Name: "",
+    Area: { X: 0, Y: 0, Width: 0, Height: 0 },
+    Type: 0,
+    Status: 0
 };
+var ratio;
 
 var isAdvancedUpload = function () {
     var div = document.createElement('div');
@@ -320,15 +325,31 @@ var uploadSampleFile = function (files) {
             processData: false,
             data: data,
             success: function (data) {
-                sourceId = data.sourceId;
-                $("#canvas").css("background-image", "url(" + data.base64 + ")");
-                changeTab();
+                if (data.status == 200) {
+                    sourceId = data.imageData.sourceId;
+                    buildBackgroundForCanvas(data.imageData);
+                    changeTab();
+                } else {
+                    $('.file-selected').html(data.message);
+                    $('.file-selected').addClass('file-error');
+                }
             },
             error: function () {
                 alert("There was error uploading files!");
             }
         });
     }
+};
+
+var buildBackgroundForCanvas = function (data) {
+    templateObject.Sample = data.imageByte;
+    templateObject.SampleExtension = data.extension;
+    var myCanvas = document.getElementById('canvas');
+    ratio = myCanvas.width / data.width;
+    myCanvas.height = data.height * ratio;
+    $("#canvas").css("background-image", "url(" + "data:image/" + data.extension + ";base64," + data.base64 + ")");
+    $("#canvas").css("background-repeat", "no-repeat");
+    $("#canvas").css("background-size", "100% auto");
 };
 
 
@@ -403,29 +424,60 @@ var validateCoordination = function (that, rect) {
 }
 
 // Get preview for field
-var getPreviewForField = function () {
+var getPreviewForField = function (id) {
+    var myRect = getCoordinationById(id);
+    myRect.x = parseInt(myRect.rect.x / ratio);
+    myRect.y = parseInt(myRect.rect.y / ratio);
+    myRect.w = parseInt(myRect.rect.w / ratio);
+    myRect.h = parseInt(myRect.rect.h / ratio);
     $.ajax({
         type: "POST",
         url: "/Template/ExecuteScan",
         data: {
             fieldName: "nguyen",
-            x: 50,
-            y: 50,
-            w: 100,
-            h: 100,
+            x: myRect.x,
+            y: myRect.y,
+            w: myRect.w,
+            h: myRect.h,
             sourceId: sourceId
         },
         headers: {
             token: "foo"
         },
         success: function (data) {
-            sourceId = data.message;
+            getResult(data.id, id);    
         },
         error: function () {
             alert("There was error uploading files!");
         }
     });
 };
+
+var getResult = function (id, divId) {
+    var result;
+    $.ajax({
+        type: "GET",
+        url: "/Template/GetResult",
+        data: {
+            id: id
+        },
+        headers: {
+            token: "foo"
+        },
+        success: function (data) {
+            result = data.preview;
+            if (result == "") {
+                getResult(id, divId);
+            } else {
+                $("#" + divId).find('.desc-preview').html(result);
+            }
+        },
+        error: function () {
+            alert("There was error uploading files!");
+        }
+    });
+    return result;
+}
 
 var validateStep2 = function () {
     var valid = true;
@@ -476,13 +528,24 @@ var validateStep2 = function () {
 var buildDataOfStep2 = function () {
     var index = 0;
     $("#box-fields .box-field").each(function () {
-        fieldItem.index = index;
-        fieldItem.name = $(this).find(".txt-field-name")[0].value.trim();
-        fieldItem.area = getCoordinationById($(this).attr("id")).rect;
-        fieldItem.type = 0;
-        fieldItem.status = 0;
+        var fieldItem = {
+            Index: 0,
+            Name: "",
+            Area: { X: 0, Y: 0, Width: 0, Height: 0 },
+            Type: 0,
+            Status: 0
+        };
+        fieldItem.Index = index;
+        fieldItem.Name = $(this).find(".txt-field-name")[0].value.trim();
+        var area = getCoordinationById($(this).attr("id")).rect
+        fieldItem.Area.X = parseInt(area.x);
+        fieldItem.Area.Y = parseInt(area.y);
+        fieldItem.Area.Width = parseInt(area.w);
+        fieldItem.Area.Height = parseInt(area.h);
+        fieldItem.Type = 0;
+        fieldItem.Status = 0;
 
-        templateObject.fieldList.push(fieldItem);
+        fieldList.push(fieldItem);
         index++;
     });
 }
@@ -529,9 +592,22 @@ var validateStep3 = function () {
 }
 
 var buildDataOfStep3 = function () {
-    templateObject.name = $("#box-step-three #txt-template-name")[0].value.trim();
-    templateObject.description = $("#box-step-three #txt-template-description")[0].value.trim();
+    templateObject.Name = $("#box-step-three #txt-template-name")[0].value.trim();
+    templateObject.Description = $("#box-step-three #txt-template-description")[0].value.trim();
 }
+
+
+
+/* ---------------------------------------- Step 4 ---------------------------------------- */
+var displayDataForStep4 = function () {
+    $("#box-step-four").find("#title-template-name").html(templateObject.Name);
+    $("#box-step-four").find("#title-template-description").html(templateObject.Description);
+    $("#box-step-four").find("#box-defined-fields-body").html("");
+    for (var i = 0; i < fieldList.length; i++) {
+        var data = "<div class=\"box-defined-field\">" + fieldList[i].Name + "</div>";
+        $("#box-step-four").find("#box-defined-fields-body").append(data);
+    }
+};
 
 
 
