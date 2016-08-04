@@ -331,7 +331,7 @@ function draw() {
     for (var i = 0; i < lstRect.length; i++) {
         ctx.strokeRect(lstRect[i].rect.x, lstRect[i].rect.y, lstRect[i].rect.w, lstRect[i].rect.h);
     }
-	ctx.strokeStyle = "#FF0000";
+    ctx.strokeStyle = "#FF0000";
     ctx.strokeRect(currentRect.x, currentRect.y, currentRect.w, currentRect.h);
     if (drawStatus == 2) {
         if (currentHandle) {
@@ -397,7 +397,7 @@ function buildRectList(id, isCancel) {
         lstRect.push(rect);
     }
     edittingRect = false;
-	clearCurrentRect();
+    clearCurrentRect();
 }
 
 // Clear current rectange and re-draw
