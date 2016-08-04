@@ -144,6 +144,7 @@ $(document).ready(function () {
         collapseFields();
         var valid = validateStep2();
         if (valid) {
+            buildDataOfStep2();
             changeTab();
         }
     });
@@ -166,8 +167,28 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "#btn-step3-next", function (e) {
+        $.ajax({
+            type: "POST",
+            url: "/Template/CreateTemplate",
+            data: templateObject,
+            headers: {
+                token: "foo"
+            },
+            success: function (data) {
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+
+
+
+    /* ---------------------------------------- Step 4 ---------------------------------------- */
+    $(document).on("click", "#btn-step4-next", function (e) {
         var valid = validateStep3();
         if (valid) {
+            buildDataOfStep3();
             changeTab();
         }
     });
@@ -225,6 +246,20 @@ var acceptableFileTypes =
     'image/png': true,
     'image/jpg': true,
     'image/jpeg': true,
+};
+var templateObject = {
+    name: "",
+    description: "",
+    sample: "",
+    sample_extension: "",
+    fieldList: []
+};
+var fieldItem = {
+    index: 0,
+    name: "",
+    area: { x: 0, y: 0, w: 0, h: 0 },
+    type: 0,
+    status: 0
 };
 
 var isAdvancedUpload = function () {
@@ -438,6 +473,20 @@ var validateStep2 = function () {
     return valid;
 }
 
+var buildDataOfStep2 = function () {
+    var index = 0;
+    $("#box-fields .box-field").each(function () {
+        fieldItem.index = index;
+        fieldItem.name = $(this).find(".txt-field-name")[0].value.trim();
+        fieldItem.area = getCoordinationById($(this).attr("id")).rect;
+        fieldItem.type = 0;
+        fieldItem.status = 0;
+
+        templateObject.fieldList.push(fieldItem);
+        index++;
+    });
+}
+
 
 
 /* ---------------------------------------- Step 3 ---------------------------------------- */
@@ -477,6 +526,11 @@ var validateStep3 = function () {
     }
 
     return valid;
+}
+
+var buildDataOfStep3 = function () {
+    templateObject.name = $("#box-step-three #txt-template-name")[0].value.trim();
+    templateObject.description = $("#box-step-three #txt-template-description")[0].value.trim();
 }
 
 

@@ -352,6 +352,16 @@ function checkCoordinationIsSet(id) {
     return isSet;
 };
 
+// Get coordination by id
+function getCoordinationById(id) {
+    for (var i = 0; i < lstRect.length; i++) {
+        if (lstRect[i].id == id) {
+            return lstRect[i];
+        }
+    }
+    return null;
+};
+
 // Get rectange by id for edit function
 function getRectangeForEdit(id) {
     for (var i = 0; i < lstRect.length; i++) {
