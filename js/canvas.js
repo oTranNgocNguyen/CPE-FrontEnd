@@ -400,6 +400,14 @@ function buildRectList(id, isCancel) {
     clearCurrentRect();
 }
 
+function buildCoordinationByRatio(rect, ratio) {
+    rect.x = parseInt(rect.x / ratio);
+    rect.y = parseInt(rect.y / ratio);
+    rect.w = parseInt(rect.w / ratio);
+    rect.h = parseInt(rect.h / ratio);
+	return rect;
+}
+
 // Clear current rectange and re-draw
 function clearCurrentRect() {
     initRect();

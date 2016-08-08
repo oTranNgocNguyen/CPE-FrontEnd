@@ -34,11 +34,16 @@ $(document).ready(function () {
     });
 
     $("#btn-upload-file").click(function (evt) {
-        /* For BE */
+        /* For BE
         uploadSampleFile(input.files);
         /* */
-        /* For FE
-        changeTab();
+        /* For FE */
+		if (sourceId == undefined) {
+			$("#box-fields").html("");
+			lstRect = [];
+			clearCurrentRect();
+		}
+        changeTab(1);
         /* */
     });
 
@@ -48,7 +53,7 @@ $(document).ready(function () {
     var canToggle = true;
     var currentId;
     $('#btn-add-field').click(function () {
-        /* For BE */
+        /* For BE
         $.ajax({
             type: "GET",
             url: "/Template/AddField",
@@ -61,7 +66,7 @@ $(document).ready(function () {
             }
         });
         /* */
-        /* For FE
+        /* For FE */
         $('#box-fields').append($('#box-field-temp').html());
         var id = generateId(30);
         $('#box-fields .box-field').last().attr('id', id);
@@ -145,8 +150,12 @@ $(document).ready(function () {
         var valid = validateStep2();
         if (valid) {
             buildDataOfStep2();
-            changeTab();
+            changeTab(1);
         }
+    });
+	
+	$(document).on("click", "#btn-step2-back", function (e) {
+		changeTab(-1);
     });
 
 
@@ -171,8 +180,12 @@ $(document).ready(function () {
         if (valid) {
             buildDataOfStep3();
             displayDataForStep4();
-            changeTab();
+            changeTab(1);
         }
+    });
+	
+	$(document).on("click", "#btn-step3-back", function (e) {
+		changeTab(-1);
     });
 
 
@@ -198,5 +211,9 @@ $(document).ready(function () {
                 alert("There was error creating template!");
             }
         });
+    });
+	
+	$(document).on("click", "#btn-step4-back", function (e) {
+		changeTab(-1);
     });
 });

@@ -314,6 +314,8 @@
         height: 24px; }
         #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .txt-field-name.error {
           border: 1px solid #f00; }
+      #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .icon-loading {
+        display: none; }
       #box-step-two #box-detected-fields #box-fields .box-field .box-field-header .desc-preview {
         font-weight: 700;
         color: #006600;

@@ -1,5 +1,5 @@
 ﻿/* ---------------------------------------- Tab ---------------------------------------- */
-var changeTab = function () {
+var changeTab = function (increment) {
     var activedTab;
     $('.create-template-tab-item').each(function () {
         if ($(this).hasClass('actived')) {
@@ -7,31 +7,36 @@ var changeTab = function () {
         }
     });
     if (activedTab) {
-        var id = $(activedTab).attr('id');
+        var step = parseInt($(activedTab).attr('step')) + increment;
         $(activedTab).removeClass('actived');
-        switch (id) {
-            case "tab-step-one":
+        switch (step) {
+            case 1:
+                $('#tab-step-one').addClass('actived');
+                $('#box-step-one').css('display', 'block');
+                $('#box-step-two').css('display', 'none');
+                $('#box-step-three').css('display', 'none');
+                $('#box-step-four').css('display', 'none');
+                break;
+            case 2:
                 $('#tab-step-two').addClass('actived');
                 $('#box-step-one').css('display', 'none');
                 $('#box-step-two').css('display', 'block');
                 $('#box-step-three').css('display', 'none');
                 $('#box-step-four').css('display', 'none');
                 break;
-            case "tab-step-two":
+            case 3:
                 $('#tab-step-three').addClass('actived');
                 $('#box-step-one').css('display', 'none');
                 $('#box-step-two').css('display', 'none');
                 $('#box-step-three').css('display', 'block');
                 $('#box-step-four').css('display', 'none');
                 break;
-            case "tab-step-three":
+            case 4:
                 $('#tab-step-four').addClass('actived');
                 $('#box-step-one').css('display', 'none');
                 $('#box-step-two').css('display', 'none');
                 $('#box-step-three').css('display', 'none');
                 $('#box-step-four').css('display', 'block');
-                break;
-            case "tab-step-four":
                 break;
         }
     }
@@ -123,10 +128,15 @@ var uploadSampleFile = function (files) {
             processData: false,
             data: data,
             success: function (data) {
+                if (sourceId) {
+                    $("#box-fields").html("");
+                    lstRect = [];
+                    clearCurrentRect();
+                }
                 if (data.status === 200) {
                     sourceId = data.imageData.sourceId;
                     buildBackgroundForCanvas(data.imageData);
-                    changeTab();
+                    changeTab(1);
                 } else {
                     $('.file-selected').html(data.message);
                     $('.file-selected').addClass('file-error');
@@ -224,10 +234,7 @@ var validateCoordination = function (that, rect) {
 // Get preview for field
 var getPreviewForField = function (divField, fieldId) {
     var myRect = getCoordinationById(fieldId);
-    myRect.x = parseInt(myRect.rect.x / ratio);
-    myRect.y = parseInt(myRect.rect.y / ratio);
-    myRect.w = parseInt(myRect.rect.w / ratio);
-    myRect.h = parseInt(myRect.rect.h / ratio);
+    myRect = buildCoordinationByRatio(myRect.rect, ratio);
     loadingPreview(divField, true);
     $.ajax({
         type: "POST",
@@ -351,6 +358,7 @@ var buildDataOfStep2 = function () {
         fieldItem.Index = index;
         fieldItem.Name = $(this).find(".txt-field-name")[0].value.trim();
         var area = getCoordinationById($(this).attr("id")).rect;
+		area = buildCoordinationByRatio(area, ratio);
         fieldItem.Area.X = parseInt(area.x);
         fieldItem.Area.Y = parseInt(area.y);
         fieldItem.Area.Width = parseInt(area.w);
