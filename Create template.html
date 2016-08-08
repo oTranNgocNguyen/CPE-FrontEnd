@@ -255,6 +255,23 @@
 					</div>
 				</div>
 			</div>
+			
+			<!-- Modal -->
+			<div id="dialog-create-template" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Create template</h4>
+						</div>
+						<div class="modal-body">
+							Success.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 		<script type="text/javascript" src="js/message-list.js"></script>
@@ -274,14 +291,15 @@
 		
 		<!-- Field -->
 		<div id="box-field-temp" style="display: none">
-			<div class="box-field" class="row mg-0">
+			<div class="box-field row mg-0">
 				<div class="box-field-header row mg-0">
 					<div class="col-md-5 col-sm-5 col-xs-5">
 						<span class="glyphicon glyphicon-menu-down glyphicon-menu-up" aria-hidden="true"></span>
 						<input type="text" name="field-name" class="txt-field-name">
 					</div>
 					<div class="col-md-7 col-sm-7 col-xs-7">
-						<p class="desc-preview">email@email.com</p>
+						<img class="icon-loading" src="~/images/loading.gif" />
+						<p class="desc-preview">Not available</p>
 						<div class="pull-right">
 							<button class="btn-delete-field" type="button"></button>
 						</div>
@@ -320,7 +338,7 @@
 							Preview:
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9">
-							Not available
+							<p class="full-desc-preview">Not available</p>
 						</div>
 					</div>
 				</div>
