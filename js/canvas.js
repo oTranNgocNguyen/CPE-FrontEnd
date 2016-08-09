@@ -405,7 +405,7 @@ function buildCoordinationByRatio(rect, ratio) {
     rect.y = parseInt(rect.y / ratio);
     rect.w = parseInt(rect.w / ratio);
     rect.h = parseInt(rect.h / ratio);
-	return rect;
+    return rect;
 }
 
 // Clear current rectange and re-draw

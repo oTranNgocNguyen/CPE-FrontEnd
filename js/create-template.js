@@ -38,11 +38,11 @@ $(document).ready(function () {
         uploadSampleFile(input.files);
         /* */
         /* For FE */
-		if (sourceId == undefined) {
-			$("#box-fields").html("");
-			lstRect = [];
-			clearCurrentRect();
-		}
+        if (sourceId == undefined) {
+            $("#box-fields").html("");
+            lstRect = [];
+            clearCurrentRect();
+        }
         changeTab(1);
         /* */
     });
@@ -153,9 +153,9 @@ $(document).ready(function () {
             changeTab(1);
         }
     });
-	
-	$(document).on("click", "#btn-step2-back", function (e) {
-		changeTab(-1);
+
+    $(document).on("click", "#btn-step2-back", function (e) {
+        changeTab(-1);
     });
 
 
@@ -183,9 +183,9 @@ $(document).ready(function () {
             changeTab(1);
         }
     });
-	
-	$(document).on("click", "#btn-step3-back", function (e) {
-		changeTab(-1);
+
+    $(document).on("click", "#btn-step3-back", function (e) {
+        changeTab(-1);
     });
 
 
@@ -212,8 +212,8 @@ $(document).ready(function () {
             }
         });
     });
-	
-	$(document).on("click", "#btn-step4-back", function (e) {
-		changeTab(-1);
+
+    $(document).on("click", "#btn-step4-back", function (e) {
+        changeTab(-1);
     });
 });
