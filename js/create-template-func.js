@@ -1,4 +1,4 @@
-﻿/* ---------------------------------------- Tab ---------------------------------------- */
+﻿/* ---------------------------------------- Common ---------------------------------------- */
 var changeTab = function (increment) {
     var activedTab;
     $('.create-template-tab-item').each(function () {
@@ -42,6 +42,10 @@ var changeTab = function (increment) {
     }
 };
 
+var enableButton = function (that) {
+    $(that).removeAttr("disabled");
+};
+
 
 
 /* ---------------------------------------- Step 1 ---------------------------------------- */
@@ -58,7 +62,8 @@ var templateObject = {
     Name: "",
     Description: "",
     Sample: "",
-    SampleExtension: ""
+    SampleExtension: "",
+    Option: 1
 };
 var fieldList = [];
 var fieldItem = {
@@ -79,8 +84,11 @@ var showFiles = function (files) {
     if (files.length > 1) {
         $('.file-selected').html(messageList.EM_004);
         $('.file-selected').addClass('file-error');
-    } else {
+    } else if (files.length === 1) {
         $('.file-selected').html(files[0].name);
+        $('.file-selected').removeClass('file-error');
+    } else {
+        $('.file-selected').html("");
         $('.file-selected').removeClass('file-error');
     }
 };
@@ -102,10 +110,10 @@ var validateSampleFile = function (files) {
             if (file.size > maxFileSize) {
                 $('.file-selected').html(messageList.EM_003);
                 $('.file-selected').addClass('file-error');
+                return false;
             } else {
                 return true;
             }
-            return true;
         } else {
             $('.file-selected').html(messageList.EM_002);
             $('.file-selected').addClass('file-error');
@@ -114,7 +122,7 @@ var validateSampleFile = function (files) {
     }
 };
 
-var uploadSampleFile = function (files) {
+var uploadSampleFile = function (files, that) {
     var valid = validateSampleFile(files);
     if (valid) {
         var file = files[0];
@@ -137,6 +145,7 @@ var uploadSampleFile = function (files) {
                     sourceId = data.imageData.sourceId;
                     buildBackgroundForCanvas(data.imageData);
                     changeTab(1);
+                    enableButton(that);
                 } else {
                     $('.file-selected').html(data.message);
                     $('.file-selected').addClass('file-error');
@@ -271,14 +280,16 @@ var getResult = function (divField, ScanResultId, fieldId, countAjax) {
             token: "foo"
         },
         success: function (data) {
-            if (data.scanData === null) {
+            if (data.status < 3) {
                 setTimeout(
                     function () {
                         getResult(divField, ScanResultId, fieldId, countAjax + 1)
                     }, settings.waitNextGetPreviewRequest);
             } else {
-                $("#" + fieldId).find('.desc-preview').html(data.scanData.preview);
-                $("#" + fieldId).find('.full-desc-preview').html(data.scanData.preview);
+                if (data.status === 3) {
+                    $("#" + fieldId).find('.desc-preview').html(data.scanData);
+                    $("#" + fieldId).find('.full-desc-preview').html(data.scanData);
+                }
                 loadingPreview(divField, false);
             }
         },
@@ -347,6 +358,7 @@ var validateStep2 = function () {
 
 var buildDataOfStep2 = function () {
     var index = 0;
+    fieldList = [];
     $("#box-fields .box-field").each(function () {
         var fieldItem = {
             Index: 0,
@@ -414,7 +426,7 @@ var validateStep3 = function () {
 
 var buildDataOfStep3 = function () {
     templateObject.Name = $("#box-step-three #txt-template-name")[0].value.trim();
-    templateObject.Description = $("#box-step-three #txt-template-description")[0].value.trim();
+    templateObject.Description = $("#box-step-three #txt-template-description")[0].value.trim().replace(/\n/g, '<br />');
 };
 
 

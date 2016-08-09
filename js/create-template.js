@@ -33,11 +33,15 @@ $(document).ready(function () {
         showFiles(e.target.files);
     });
 
+    $('.btn-create-default').click(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+
     $("#btn-upload-file").click(function (evt) {
-        /* For BE
-        uploadSampleFile(input.files);
+        /* For BE */
+        uploadSampleFile(input.files, this);
         /* */
-        /* For FE */
+        /* For FE
         if (sourceId == undefined) {
             $("#box-fields").html("");
             lstRect = [];
@@ -53,7 +57,7 @@ $(document).ready(function () {
     var canToggle = true;
     var currentId;
     $('#btn-add-field').click(function () {
-        /* For BE
+        /* For BE */
         $.ajax({
             type: "GET",
             url: "/Template/AddField",
@@ -66,7 +70,7 @@ $(document).ready(function () {
             }
         });
         /* */
-        /* For FE */
+        /* For FE
         $('#box-fields').append($('#box-field-temp').html());
         var id = generateId(30);
         $('#box-fields .box-field').last().attr('id', id);
@@ -145,17 +149,19 @@ $(document).ready(function () {
         $('#' + $(this).closest('.box-field').attr('id')).remove();
     });
 
-    $(document).on("click", "#btn-step2-next", function (e) {
+    $("#btn-step2-next").click(function (evt) {
         collapseFields();
         var valid = validateStep2();
         if (valid) {
             buildDataOfStep2();
             changeTab(1);
         }
+        enableButton(this);
     });
 
-    $(document).on("click", "#btn-step2-back", function (e) {
+    $("#btn-step2-back").click(function (evt) {
         changeTab(-1);
+        enableButton(this);
     });
 
 
@@ -163,11 +169,9 @@ $(document).ready(function () {
     /* ---------------------------------------- Step 3 ---------------------------------------- */
     $('#box-verification button').click(function () {
         if ($(this).hasClass('locked_active') || $(this).hasClass('unlocked_inactive')) {
-            /* code to do when unlocking */
-            console.log('Switched on.');
+            templateObject.Option = 1;
         } else {
-            /* code to do when locking */
-            console.log('Switched off.');
+            templateObject.Option = 0;
         }
 
         /* reverse locking status */
@@ -175,23 +179,25 @@ $(document).ready(function () {
         $('#box-verification button').eq(1).toggleClass('locked_inactive locked_active btn-default btn-info');
     });
 
-    $(document).on("click", "#btn-step3-next", function (e) {
+    $("#btn-step3-next").click(function (evt) {
         var valid = validateStep3();
         if (valid) {
             buildDataOfStep3();
             displayDataForStep4();
             changeTab(1);
         }
+        enableButton(this);
     });
 
-    $(document).on("click", "#btn-step3-back", function (e) {
+    $("#btn-step3-back").click(function (evt) {
         changeTab(-1);
+        enableButton(this);
     });
 
 
 
     /* ---------------------------------------- Step 4 ---------------------------------------- */
-    $(document).on("click", "#btn-step4-next", function (e) {
+    $("#btn-step4-next").click(function (evt) {
         $.ajax({
             type: "POST",
             url: "/Template/Create",
@@ -206,6 +212,7 @@ $(document).ready(function () {
                 if (data.status === 200) {
                     showFinishCreateTemplatePopup();
                 }
+                enableButton(this);
             },
             error: function () {
                 alert("There was error creating template!");
@@ -213,7 +220,8 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("click", "#btn-step4-back", function (e) {
+    $("#btn-step4-back").click(function (evt) {
         changeTab(-1);
+        enableButton(this);
     });
 });

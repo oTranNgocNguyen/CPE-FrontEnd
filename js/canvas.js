@@ -401,11 +401,12 @@ function buildRectList(id, isCancel) {
 }
 
 function buildCoordinationByRatio(rect, ratio) {
-    rect.x = parseInt(rect.x / ratio);
-    rect.y = parseInt(rect.y / ratio);
-    rect.w = parseInt(rect.w / ratio);
-    rect.h = parseInt(rect.h / ratio);
-    return rect;
+    var convertedRect = { x: 0, y: 0, w: 0, h: 0 };
+    convertedRect.x = parseInt(rect.x / ratio);
+    convertedRect.y = parseInt(rect.y / ratio);
+    convertedRect.w = parseInt(rect.w / ratio);
+    convertedRect.h = parseInt(rect.h / ratio);
+    return convertedRect;
 }
 
 // Clear current rectange and re-draw
