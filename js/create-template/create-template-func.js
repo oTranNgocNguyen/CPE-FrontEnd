@@ -75,12 +75,7 @@ var fieldItem = {
 };
 var ratio;
 
-var isAdvancedUpload = function () {
-    var div = document.createElement('div');
-    return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
-}();
-
-var showFiles = function (files) {
+var showOneFileOnUploadBox = function (files) {
     if (files.length > 1) {
         $('.file-selected').html(messageList.EM_004);
         $('.file-selected').addClass('file-error');
@@ -111,6 +106,10 @@ var validateSampleFile = function (files) {
                 $('.file-selected').html(messageList.EM_003);
                 $('.file-selected').addClass('file-error');
                 return false;
+            } else if (file.size === 0) {
+                $('.file-selected').html(messageList.EM_020);
+                $('.file-selected').addClass('file-error');
+                return false;
             } else {
                 return true;
             }
@@ -126,6 +125,14 @@ var uploadSampleFile = function (files, that) {
     var valid = validateSampleFile(files);
     if (valid) {
         var file = files[0];
+
+        // Check that user re-upload new sample file or not
+        if (file === settings.currentSampleFile) {
+            changeTab(1);
+            enableButton(that);
+            return;
+        }
+
         var data = new FormData();
         data.append(file.name, file);
 
@@ -136,25 +143,30 @@ var uploadSampleFile = function (files, that) {
             processData: false,
             data: data,
             success: function (data) {
-                if (sourceId) {
+                if (data.status === 200) {
                     $("#box-fields").html("");
                     lstRect = [];
                     clearCurrentRect();
-                }
-                if (data.status === 200) {
+                    settings.currentSampleFile = file;
+
                     sourceId = data.imageData.sourceId;
                     buildBackgroundForCanvas(data.imageData);
                     changeTab(1);
-                    enableButton(that);
                 } else {
                     $('.file-selected').html(data.message);
                     $('.file-selected').addClass('file-error');
                 }
+                enableButton(that);
+                // prevent leaving page accidentally
+                prevent_leaving_page(true);
             },
             error: function () {
                 alert("There was error uploading files!");
+                enableButton(that);
             }
         });
+    } else {
+        enableButton(that);
     }
 };
 
@@ -240,12 +252,21 @@ var validateCoordination = function (that, rect) {
     }
 };
 
+var getAjaxById = function (id) {
+    for (var i = 0; i < settings.ajaxListOfStep2.length; i++) {
+        if (settings.ajaxListOfStep2[i].id === id) {
+            return settings.ajaxListOfStep2[i];
+        }
+    }
+    return null;
+};
+
 // Get preview for field
 var getPreviewForField = function (divField, fieldId) {
     var myRect = getCoordinationById(fieldId);
     myRect = buildCoordinationByRatio(myRect.rect, ratio);
     loadingPreview(divField, true);
-    $.ajax({
+    var request = $.ajax({
         type: "POST",
         url: "/Template/ExecuteScan",
         data: {
@@ -260,17 +281,18 @@ var getPreviewForField = function (divField, fieldId) {
             getResult(divField, data.id, fieldId, 0);
         },
         error: function () {
-            alert("There was error getting preview!");
+            loadPreview(fieldId, { status: 4 });
         }
     });
 };
 
 var getResult = function (divField, ScanResultId, fieldId, countAjax) {
     if (countAjax > settings.maxGetPreviewRequest) {
-        loadingPreview(divField, false);
+        loadPreview(fieldId, { status: 4 });
         return;
     }
-    $.ajax({
+    setPreviewsAjax(fieldId, ScanResultId);
+    var request = $.ajax({
         type: "GET",
         url: "/Template/GetResult",
         data: {
@@ -280,22 +302,20 @@ var getResult = function (divField, ScanResultId, fieldId, countAjax) {
             token: "foo"
         },
         success: function (data) {
+            if (isCancelPreviewsAjax(fieldId, ScanResultId)) {
+                return;
+            }
             if (data.status < 3) {
                 setTimeout(
                     function () {
                         getResult(divField, ScanResultId, fieldId, countAjax + 1)
                     }, settings.waitNextGetPreviewRequest);
             } else {
-                if (data.status === 3) {
-                    $("#" + fieldId).find('.desc-preview').html(data.scanData);
-                    $("#" + fieldId).find('.full-desc-preview').html(data.scanData);
-                }
-                loadingPreview(divField, false);
+                loadPreview(fieldId, data);
             }
         },
         error: function () {
-            alert("There was error getting result of preview!");
-            loadingPreview(divField, false);
+            loadPreview(fieldId, { status: 4 });
         }
     });
 };
@@ -309,6 +329,26 @@ var loadingPreview = function (that, isLoading) {
         $(that).find(".desc-preview").css("display", "inline-block");
     }
 };
+
+var loadPreview = function (fieldId, preview) {
+    if(preview.status === 3){
+        if (preview.scanData === "") {
+            $("#" + fieldId).find('.desc-preview').html(messageList.EM_017);
+            $("#" + fieldId).find('.desc-preview').addClass("error");
+            $("#" + fieldId).find('.full-desc-preview').html(messageList.EM_017);
+        } else {
+            $("#" + fieldId).find('.desc-preview').html(preview.scanData);
+            $("#" + fieldId).find('.desc-preview').removeClass("error");
+            $("#" + fieldId).find('.full-desc-preview').html(preview.scanData);
+        }
+    } else {
+        $("#" + fieldId).find('.desc-preview').html(messageList.EM_018);
+        $("#" + fieldId).find('.desc-preview').addClass("error");
+        $("#" + fieldId).find('.full-desc-preview').html(messageList.EM_018);
+        alert(messageList.EM_019);
+    }
+    loadingPreview($("#" + fieldId), false);
+}
 
 var validateStep2 = function () {
     var valid = true;
@@ -386,6 +426,24 @@ var buildDataOfStep2 = function () {
 
 
 /* ---------------------------------------- Step 3 ---------------------------------------- */
+var checkNameIsDuplicated = function (name) {
+    var result = {IsDuplicated: false, Message: ""};
+    $.ajax({
+        type: "GET",
+        url: "/Template/checkNameIsDuplicated",
+        async: false,
+        data: {
+            name: name
+        },
+        success: function (data) {
+            result = data;
+        },
+        error: function () {
+        }
+    });
+    return result;
+};
+
 var validateStep3 = function () {
     var valid = true;
 
@@ -394,6 +452,7 @@ var validateStep3 = function () {
         $("#box-step-three #txt-template-name").addClass("error");
         $("#box-step-three #txt-template-name-error").css("display", "block");
         $("#box-step-three #txt-template-name-error").html(messageList.EM_013);
+        templateName.value = "";
         valid = false;
     } else if (templateName.value.trim().length > 50) {
         $("#box-step-three #txt-template-name").addClass("error");
@@ -401,17 +460,20 @@ var validateStep3 = function () {
         $("#box-step-three #txt-template-name-error").html(messageList.EM_014);
         valid = false;
     } else {
-        $("#box-step-three #txt-template-name").removeClass("error");
-        $("#box-step-three #txt-template-name-error").css("display", "none");
+        var data = checkNameIsDuplicated(templateName.value.trim());
+        if (data.isDuplicated) {
+            $("#box-step-three #txt-template-name").addClass("error");
+            $("#box-step-three #txt-template-name-error").css("display", "block");
+            $("#box-step-three #txt-template-name-error").html(data.message);
+            valid = false;
+        } else {
+            $("#box-step-three #txt-template-name").removeClass("error");
+            $("#box-step-three #txt-template-name-error").css("display", "none");
+        }
     }
 
     var templateDesc = $("#box-step-three #txt-template-description")[0];
-    if (templateDesc.value.trim().length === 0) {
-        $("#box-step-three #txt-template-description").addClass("error");
-        $("#box-step-three #txt-template-description-error").css("display", "block");
-        $("#box-step-three #txt-template-description-error").html(messageList.EM_015);
-        valid = false;
-    } else if (templateDesc.value.trim().length > 500) {
+    if (templateDesc.value.trim().length > 500) {
         $("#box-step-three #txt-template-description").addClass("error");
         $("#box-step-three #txt-template-description-error").css("display", "block");
         $("#box-step-three #txt-template-description-error").html(messageList.EM_016);
@@ -433,17 +495,24 @@ var buildDataOfStep3 = function () {
 
 /* ---------------------------------------- Step 4 ---------------------------------------- */
 var displayDataForStep4 = function () {
-    $("#box-step-four").find("#title-template-name").html(templateObject.Name);
-    $("#box-step-four").find("#title-template-description").html(templateObject.Description);
+    $("#box-step-four").find("#title-template-name").text(templateObject.Name);
+    $("#box-step-four").find("#title-template-description").text(templateObject.Description);
+    $("#box-step-four").find("#title-template-verification-required").text(templateObject.Option == 1 ? "Yes" : "No");
+    $("#box-step-four").find("#title-template-email").text(templateObject.Name + "@cpe.com");
     $("#box-step-four").find("#box-defined-fields-body").html("");
     for (var i = 0; i < fieldList.length; i++) {
-        var data = "<div class=\"box-defined-field\">" + fieldList[i].Name + "</div>";
-        $("#box-step-four").find("#box-defined-fields-body").append(data);
+        var div = document.createElement('div');
+        div.className = "box-defined-field";
+        div.textContent = fieldList[i].Name;
+        $("#box-step-four").find("#box-defined-fields-body").append(div);
     }
 };
 
 var showFinishCreateTemplatePopup = function () {
+    // stop preventing leaving page accidentally
+    prevent_leaving_page(false);
     var dialog = $("#dialog-create-template");
+    $(dialog).find(".modal-body").text(templateObject.Name + " has been created successfully.");
     dialog.modal();
     $(dialog).on('hide.bs.modal', function (aEvent) {
         window.location.href = '/Template/List/';

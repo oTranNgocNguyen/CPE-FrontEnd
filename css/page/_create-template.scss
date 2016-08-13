@@ -169,6 +169,10 @@
 					.txt-field-name {
 						width: 80%;
 						height: 24px;
+                        padding: 0px;
+                        padding-left: 4px;
+                        margin-top: 6px;
+                        line-height: 20px;
 						&.error {
 							border: 1px solid #f00;
 						}
@@ -183,6 +187,9 @@
 						display: inline-block;
                         width: 85%;
                         vertical-align: bottom;
+                        &.error {
+                            color: #f00;
+                        }
 					}
 					.btn-delete-field {
 						width: 17px;
@@ -203,15 +210,10 @@
 					.field-type {
 						padding: 2px;
 						width: 200px;
+                        line-height: 24px;
 					}
 					.btn-set-coordination, .btn-save-coordination, .btn-cancel-coordination {
-						height: 30px;
-						line-height: 30px;
-						color: #fff;
-						border: none;
-						border-radius: 5px;
-						background-color: #169bd5;
-						padding-right: 10px;
+						padding: 4px 8px;
 					}
 					.lbl-edit-coordination {
 						margin: 0px;

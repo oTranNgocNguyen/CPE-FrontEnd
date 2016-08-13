@@ -22,7 +22,8 @@
 		height: $menu-height;
 	}
 	.navbar-nav {
-		width: 100%;
+        width: 99%;
+		width: calc(100% - 1px);
 		* {
 			text-align: center;
 			font-size: 13px;
@@ -75,6 +76,7 @@
 
 #navbar {
 	.dropdown-menu {
+        width: 100%;
 		margin-top: 1px;
 		padding: 0px;
 		border: 1px solid #666;
@@ -88,8 +90,9 @@
 			> a {
 				height: $menu-height;
 				line-height: $menu-height;
-				padding: 0px 50px;
+                padding: 0px 10px;
 				color: #000 !important;
+                text-align: left;
 				&:hover, &:focus {
 					background-image: none;
 					background-color: #fff;

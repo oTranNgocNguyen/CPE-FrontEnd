@@ -74,7 +74,7 @@
 		</nav>
 		
 		<div id="body-container">
-			<h1 id="title-page">Create / Modify template</h1>
+			<h1 id="title-page">Create Parsing Rule</h1>
 			<div id="tab-create-template" class="row mg-0">
 				<div id="tab-step-one" class="create-template-tab-item pull-left actived" step="1">
 					<div class="create-template-tab-number">1</div>
@@ -92,7 +92,7 @@
 					<div class="create-template-tab-number">3</div>
 					<h3>Additional information</h3>
 					<p>You need to provide some extra information</p>
-					<p>such as: Template Name, Description</p>
+					<p>such as: Parsing Rule Name, Description</p>
 				</div>
 				<div id="tab-step-four" class="create-template-tab-item pull-left" step="4">
 					<div class="create-template-tab-number">4</div>
@@ -112,13 +112,13 @@
 							<p>or</p>
 							<input type="file" name="files" id="files" class="input-file">
 							<label for="files" class="file-label">Browse files ...</label>
-							<span class="file-selected"></span>
+							<span class="file-selected break-word"></span>
 						</div>
 						<div class="box-uploading">Uploading…</div>
 					</div>
 					<div class="box-btn row mg-0">
 						<div class="pull-right">
-							<button id="btn-upload-file" type="button" class="btn-create-default btn-next">Next</button>
+							<button id="btn-upload-file" type="button" class="btn-create-default btn-next btn-submit-without-double">Next</button>
 						</div>
 					</div>
 				</form>
@@ -161,8 +161,8 @@
 				</div>
 				<div class="box-btn row mg-0">
 					<div class="pull-right">
-						<button id="btn-step2-back" type="button" class="btn-create-default btn-back">Back</button>
-						<button id="btn-step2-next" type="button" class="btn-create-default btn-next">Next</button>
+						<button id="btn-step2-back" type="button" class="btn-create-default btn-back btn-submit-without-double">Back</button>
+						<button id="btn-step2-next" type="button" class="btn-create-default btn-next btn-submit-without-double">Next</button>
 					</div>
 				</div>
 			</div>
@@ -172,7 +172,7 @@
 				<div class="row mg-0">
 					<div class="row mg-0">
 						<div class="col-md-12 col-sm-12 col-xs-12 pad-left-0 pad-right-0">
-							<p id="title-template-name">Template name</p>
+							<p id="title-template-name">Parsing rule name</p>
 						</div>
 						<div class="col-md-12 col-sm-12 col-xs-12 pad-left-0 pad-right-0">
 							<input type="text" name="template-name" id="txt-template-name">
@@ -202,8 +202,8 @@
 				</div>
 				<div class="box-btn row mg-0">
 					<div class="pull-right">
-						<button id="btn-step3-back" type="button" class="btn-create-default btn-back">Back</button>
-						<button id="btn-step3-next" type="button" class="btn-create-default btn-next">Next</button>
+						<button id="btn-step3-back" type="button" class="btn-create-default btn-back btn-submit-without-double">Back</button>
+						<button id="btn-step3-next" type="button" class="btn-create-default btn-next btn-submit-without-double">Next</button>
 					</div>
 				</div>
 			</div>
@@ -213,10 +213,36 @@
 				<div class="row mg-0">
 					<div class="col-md-6 col-sm-6 col-xs-6 pad-left-0">
 						<div class="row mg-0">
-							<p id="title-template-name" class="break-word">Template name</p>
+							<div class="col-md-5 col-sm-5 col-xs-5 pad-left-0">
+								<p style="font-size: 20px; font-weight: 700; margin-bottom: 15px;">Parsing rule name:</p>
+							</div>
+							<div class="col-md-7 col-sm-7 col-xs-7 pad-left-0">
+								<p id="title-template-name" class="break-word"></p>
+							</div>
 						</div>
 						<div class="row mg-0">
-							<p id="title-template-description" class="break-word">Description of the template will be shown here as preview option. This template is used for PO and Registration Form . Description of the template will be shown here as preview option. This template is used for PO and Registration Form.</p>
+							<div class="col-md-5 col-sm-5 col-xs-5 pad-left-0">
+								Description:
+							</div>
+							<div class="col-md-7 col-sm-7 col-xs-7 pad-left-0">
+								<p id="title-template-description" class="break-word"></p>
+							</div>
+						</div>
+						<div class="row mg-0">
+							<div class="col-md-5 col-sm-5 col-xs-5 pad-left-0">
+								User Verification Required:
+							</div>
+							<div class="col-md-7 col-sm-7 col-xs-7 pad-left-0">
+								<p id="title-template-verification-required" class="break-word"></p>
+							</div>
+						</div>
+						<div class="row mg-0">
+							<div class="col-md-5 col-sm-5 col-xs-5 pad-left-0">
+								Email:
+							</div>
+							<div class="col-md-7 col-sm-7 col-xs-7 pad-left-0">
+								<p id="title-template-email" class="break-word"></p>
+							</div>
 						</div>
 					</div>
 					<div id="box-defined-fields" class="col-md-6 col-sm-6 col-xs-6">
@@ -224,34 +250,13 @@
 							Field Name
 						</div>
 						<div id="box-defined-fields-body" class="row mg-0">
-							<div class="box-defined-field" class="row mg-0">
-								Ricoh Branch /Dealer
-							</div>
-							<div class="box-defined-field" class="row mg-0">
-								Service Team Email
-							</div>
-							<div class="box-defined-field" class="row mg-0">
-								PO Number
-							</div>
-							<div class="box-defined-field" class="row mg-0">
-								Organization Name
-							</div>
-							<div class="box-defined-field" class="row mg-0">
-								Country
-							</div>
-							<div class="box-defined-field" class="row mg-0">
-								Industry
-							</div>
-							<div class="box-defined-field" class="row mg-0">
-								Remark
-							</div>
 						</div>
 					</div>
 				</div>
 				<div class="box-btn row mg-0">
 					<div class="pull-right">
-						<button id="btn-step4-back" type="button" class="btn-create-default btn-back">Back</button>
-						<button id="btn-step4-next" type="button" class="btn-create-default btn-next">Finish</button>
+						<button id="btn-step4-back" type="button" class="btn-create-default btn-back btn-submit-without-double">Back</button>
+						<button id="btn-step4-next" type="button" class="btn-create-default btn-next btn-submit-without-double">Finish</button>
 					</div>
 				</div>
 			</div>
@@ -261,7 +266,7 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title">Create template</h4>
+							<h4 class="modal-title">Create Parsing Rule</h4>
 						</div>
 						<div class="modal-body">
 							Success.
@@ -274,11 +279,14 @@
 			</div>
 		</div>
 		
-		<script type="text/javascript" src="js/settings.js"></script>
-		<script type="text/javascript" src="js/message-list.js"></script>
-		<script type="text/javascript" src="js/create-template.js"></script>
-		<script type="text/javascript" src="js/create-template-func.js"></script>
-		<script type="text/javascript" src="js/canvas.js"></script>
+		<script type="text/javascript" src="js/shared/settings.js"></script>
+		<script type="text/javascript" src="js/shared/message-list.js"></script>
+		<script type="text/javascript" src="js/shared/common.js"></script>
+		<script type="text/javascript" src="js/shared/prevent-leaving.js"></script>
+		<script type="text/javascript" src="js/create-template/create-template.js"></script>
+		<script type="text/javascript" src="js/create-template/create-template-func.js"></script>
+		<script type="text/javascript" src="js/create-template/canvas.js"></script>
+		<script type="text/javascript" src="js/create-template/ajax-step2.js"></script>
 		
 		<footer class="row page-footer-row">
 			<div class="row mg-0">
@@ -301,7 +309,7 @@
 					</div>
 					<div class="col-md-7 col-sm-7 col-xs-7">
 						<img class="icon-loading" src="images/loading.gif" />
-						<p class="desc-preview title-one-line">Not available</p>
+						<p class="desc-preview title-one-line error">[Undefined]</p>
 						<div class="pull-right">
 							<button class="btn-delete-field" type="button"></button>
 						</div>
@@ -327,9 +335,9 @@
 							Coordination:
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9">
-							<button class="btn-set-coordination" type="button">Set</button>
-							<button class="btn-save-coordination" type="button" style="display:none">Save</button>
-							<button class="btn-cancel-coordination" type="button" style="display:none">Cancel</button>
+							<button class="btn btn-primary btn-set-coordination" type="button">Set</button>
+							<button class="btn btn-primary btn-save-coordination" type="button" style="display:none">Save</button>
+							<button class="btn btn-secondary btn-cancel-coordination" type="button" style="display:none">Cancel</button>
 							<p class="lbl-edit-coordination" style="display:none">Yes</p>
 							<button class="btn-edit-coordination" type="button" style="display:none"></button>
 							<span class="txt-coordination-error template-error"></span>

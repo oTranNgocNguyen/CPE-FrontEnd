@@ -1,45 +1,20 @@
 $(document).ready(function () {
-    var form = $('.box-upload-file')[0];
-    var input = form.querySelector('input[type="file"]');
+    var formUpload = $('.box-upload-file')[0];
+    var inputFile = formUpload.querySelector('input[type="file"]');
 
-    if (isAdvancedUpload) {
-        form.classList.add('has-advanced-upload'); // letting the CSS part to know drag&drop is supported by the browser
+    initDraggableFileForUploadBox(formUpload, inputFile);
 
-        ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(function (event) {
-            form.addEventListener(event, function (e) {
-                // preventing the unwanted behaviours
-                e.preventDefault();
-                e.stopPropagation();
-            });
-        });
-        ['dragover', 'dragenter'].forEach(function (event) {
-            form.addEventListener(event, function () {
-                form.classList.add('is-dragover');
-            });
-        });
-        ['dragleave', 'dragend', 'drop'].forEach(function (event) {
-            form.addEventListener(event, function () {
-                form.classList.remove('is-dragover');
-            });
-        });
-        form.addEventListener('drop', function (e) {
-            droppedFiles = e.dataTransfer.files; // the files that were dropped
-            showFiles(droppedFiles);
-
-        });
-    }
-
-    input.addEventListener('change', function (e) {
-        showFiles(e.target.files);
+    inputFile.addEventListener('change', function (e) {
+        showOneFileOnUploadBox(e.target.files);
     });
 
-    $('.btn-create-default').click(function () {
+    $('.btn-submit-without-double').click(function () {
         $(this).attr('disabled', 'disabled');
     });
 
     $("#btn-upload-file").click(function (evt) {
         /* For BE */
-        uploadSampleFile(input.files, this);
+        uploadSampleFile(inputFile.files, this);
         /* */
         /* For FE
         if (sourceId == undefined) {
@@ -120,6 +95,7 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".btn-save-coordination", function (e) {
+        cancelPreviewsAjax($(this).closest('.box-field').attr('id'));
         var valid = validateCoordination(this, currentRect);
         if (valid) {
             buildRectList($(this).closest('.box-field').attr('id'), false);

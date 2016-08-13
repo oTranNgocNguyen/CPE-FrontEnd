@@ -327,9 +327,9 @@ function mouseMove(e) {
 // Draw
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "#0000FF";
+    ctx.fillStyle = 'rgba(0, 255, 0, 0.2)';
     for (var i = 0; i < lstRect.length; i++) {
-        ctx.strokeRect(lstRect[i].rect.x, lstRect[i].rect.y, lstRect[i].rect.w, lstRect[i].rect.h);
+        ctx.fillRect(lstRect[i].rect.x, lstRect[i].rect.y, lstRect[i].rect.w, lstRect[i].rect.h);
     }
     ctx.strokeStyle = "#FF0000";
     ctx.strokeRect(currentRect.x, currentRect.y, currentRect.w, currentRect.h);
