@@ -41,6 +41,7 @@ function initCanvas() {
     canvas.addEventListener('mousedown', mouseDown, false);
     canvas.addEventListener('mouseup', mouseUp, false);
     canvas.addEventListener('mousemove', mouseMove, false);
+	canvas.addEventListener('mouseout', mouseOut, false);
 }
 
 // Create point object
@@ -58,15 +59,13 @@ function getMousePosition(mouse, canvas) {
 }
 
 // Check and re-build currentRect after user draw rectange
-function buildRectForFirstDraw(mousePos) {
-    var w = mousePos.x - currentRect.x;
-    var h = mousePos.y - currentRect.y;
+function buildRectForFirstDraw(rect) {
     var orientation;
-    if (w < 0 && h < 0) {
+    if (rect.w < 0 && rect.h < 0) {
         orientation = "topleft";
-    } else if (w < 0 && h >= 0) {
+    } else if (rect.w < 0 && rect.h >= 0) {
         orientation = "bottomleft";
-    } else if (w >= 0 && h < 0) {
+    } else if (rect.w >= 0 && rect.h < 0) {
         orientation = "topright";
     } else {
         orientation = "bottomright";
@@ -74,28 +73,29 @@ function buildRectForFirstDraw(mousePos) {
 
     switch (orientation) {
         case "topleft":
-            currentRect.x = mousePos.x;
-            currentRect.y = mousePos.y;
-            currentRect.w = -w;
-            currentRect.h = -h;
+            rect.x = rect.x + rect.w;
+            rect.y = rect.y + rect.h;
+            rect.w = -rect.w;
+            rect.h = -rect.h;
             break;
         case "bottomleft":
-            currentRect.x = mousePos.x;
-            currentRect.y = currentRect.y;
-            currentRect.w = -w;
-            currentRect.h = h;
+            rect.x = rect.x + rect.w;
+            rect.y = rect.y;
+            rect.w = -rect.w;
+            rect.h = rect.h;
             break;
         case "topright":
-            currentRect.x = currentRect.x;
-            currentRect.y = mousePos.y;
-            currentRect.w = w;
-            currentRect.h = -h;
+            rect.x = rect.x;
+            rect.y = rect.y + rect.h;
+            rect.w = rect.w;
+            rect.h = -rect.h;
             break;
         case "bottomright":
-            currentRect.w = w;
-            currentRect.h = h;
+            rect.w = rect.w;
+            rect.h = rect.h;
             break;
     }
+	return rect;
 }
 
 function dist(p1, p2) {
@@ -242,6 +242,19 @@ function buildRectAfterResize() {
     }
 }
 
+// Check and increase size of rectange if it is very small
+function increaseSizeOfRectange(rect) {
+	var w = rect.w < 0 ? -rect.w : rect.w;
+	var h = rect.h < 0 ? -rect.h : rect.h;
+	w = w < settings.minSizeOfRect ? settings.minSizeOfRect : w;
+	h = h < settings.minSizeOfRect ? settings.minSizeOfRect : h;
+	w = rect.w < 0 ? -w : w;
+	h = rect.h < 0 ? -h : h;
+	rect.w = w;
+	rect.h = h;
+	return rect;
+}
+
 // Mousedown event
 function mouseDown(e) {
     switch (drawStatus) {
@@ -268,13 +281,14 @@ function mouseDown(e) {
 function mouseUp(e) {
     switch (drawStatus) {
         case 1:
-            var mousePos = getMousePosition(e, this);
-            buildRectForFirstDraw(mousePos);
+            buildRectForFirstDraw(currentRect);
+			currentRect = increaseSizeOfRectange(currentRect);
             drawStatus = 2;
             break;
         case 2:
             if (currentHandle) {
                 buildRectAfterResize();
+				currentRect = increaseSizeOfRectange(currentRect);
             }
             currentHandle = false;
     }
@@ -322,6 +336,10 @@ function mouseMove(e) {
                 draw();
             }
     }
+}
+
+function mouseOut (e) {
+	
 }
 
 // Draw

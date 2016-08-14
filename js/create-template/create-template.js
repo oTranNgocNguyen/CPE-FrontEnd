@@ -13,10 +13,10 @@ $(document).ready(function () {
     });
 
     $("#btn-upload-file").click(function (evt) {
-        /* For BE */
+        /* For BE
         uploadSampleFile(inputFile.files, this);
         /* */
-        /* For FE
+        /* For FE */
         if (sourceId == undefined) {
             $("#box-fields").html("");
             lstRect = [];
@@ -32,7 +32,7 @@ $(document).ready(function () {
     var canToggle = true;
     var currentId;
     $('#btn-add-field').click(function () {
-        /* For BE */
+        /* For BE
         $.ajax({
             type: "GET",
             url: "/Template/AddField",
@@ -45,7 +45,7 @@ $(document).ready(function () {
             }
         });
         /* */
-        /* For FE
+        /* For FE */
         $('#box-fields').append($('#box-field-temp').html());
         var id = generateId(30);
         $('#box-fields .box-field').last().attr('id', id);
@@ -99,7 +99,7 @@ $(document).ready(function () {
         var valid = validateCoordination(this, currentRect);
         if (valid) {
             buildRectList($(this).closest('.box-field').attr('id'), false);
-            getPreviewForField($(this).closest('.box-field'), $(this).closest('.box-field').attr('id'));
+            // getPreviewForField($(this).closest('.box-field'), $(this).closest('.box-field').attr('id'));
             displayCoordinationBtns(this, "set");
         }
     });
