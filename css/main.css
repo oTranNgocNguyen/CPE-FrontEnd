@@ -128,41 +128,14 @@
       border: none; } }
 
 @media (min-width: 768px) {
-  .page-header-row {
-    width: 750px; }
-
-  .navbar {
-    width: 750px; }
-
-  #body-container {
-    width: 750px; }
-
-  .page-footer-row {
-    width: 750px; } }
+  .page-header-row, .navbar, #body-container, .page-footer-row {
+    width: calc(100% - 10px); } }
 @media (min-width: 992px) {
-  .page-header-row {
-    width: 970px; }
-
-  .navbar {
-    width: 970px; }
-
-  #body-container {
-    width: 970px; }
-
-  .page-footer-row {
-    width: 970px; } }
+  .page-header-row, .navbar, #body-container, .page-footer-row {
+    width: calc(100% - 10px); } }
 @media (min-width: 1200px) {
-  .page-header-row {
-    width: 1000px; }
-
-  .navbar {
-    width: 1000px; }
-
-  #body-container {
-    width: 1000px; }
-
-  .page-footer-row {
-    width: 1000px; } }
+  .page-header-row, .navbar, #body-container, .page-footer-row {
+    width: calc(100% - 10px); } }
 /* Header */
 .page-header-row {
   margin: 0 auto; }
@@ -218,7 +191,7 @@
     #tab-create-template .create-template-tab-item .create-template-tab-number {
       position: absolute;
       top: -23px;
-      left: 104px;
+      left: calc(50% - 23px);
       width: 46px;
       height: 46px;
       border: 1px solid #555;

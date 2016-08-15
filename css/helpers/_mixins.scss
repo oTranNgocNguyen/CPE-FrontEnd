@@ -7,3 +7,7 @@
 	color: #000;
 	background: $s-menu-bg;
 }
+
+@mixin page_width {
+    width: calc(100% - 10px);
+}

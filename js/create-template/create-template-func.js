@@ -170,6 +170,16 @@ var uploadSampleFile = function (files, that) {
     }
 };
 
+var buildWidthForCanvas = function () {
+    var myCanvas = document.getElementById('canvas');
+    var winWidth = $(window).width();
+    var winPadding = 10;
+    var parentPercent = $(myCanvas).parent().width() / 100;
+    var parentPadding = parseInt($(myCanvas).parent().css("padding-left"));
+    var border = 2;
+    myCanvas.width = (winWidth - winPadding)*parentPercent - parentPadding - border;
+}
+
 var buildBackgroundForCanvas = function (data) {
     templateObject.Sample = data.imageByte;
     templateObject.SampleExtension = data.extension;

@@ -22,6 +22,7 @@ $(document).ready(function () {
             lstRect = [];
             clearCurrentRect();
         }
+        buildWidthForCanvas();
         changeTab(1);
         /* */
     });

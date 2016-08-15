@@ -1,52 +1,16 @@
 @media (min-width: 768px) {
-	.page-header-row {
-		width: $tablet-width;
-	}
-  
-	.navbar {
-		width: $tablet-width;
-	}
-	
-	#body-container {
-		width: $tablet-width;
-	}
-	
-	.page-footer-row {
-		width: $tablet-width;
+	.page-header-row, .navbar, #body-container, .page-footer-row {
+		@include page_width;
 	}
 }
 @media (min-width: 992px) {
-	.page-header-row {
-		width: $pc-width;
-	}
-	
-	.navbar {
-		width: $pc-width;
-	}
-	
-	#body-container {
-		width: $pc-width;
-	}
-	
-	.page-footer-row {
-		width: $pc-width;
+	.page-header-row, .navbar, #body-container, .page-footer-row {
+		@include page_width;
 	}
 }
 @media (min-width: 1200px) {
-	.page-header-row {
-		width: $m-pc-width;
-	}
-	
-	.navbar {
-		width: $m-pc-width;
-	}
-	
-	#body-container {
-		width: $m-pc-width;
-	}
-	
-	.page-footer-row {
-		width: $m-pc-width;
+	.page-header-row, .navbar, #body-container, .page-footer-row {
+		@include page_width;
 	}
 }
 
