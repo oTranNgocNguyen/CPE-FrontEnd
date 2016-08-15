@@ -339,7 +339,21 @@ function mouseMove(e) {
 }
 
 function mouseOut (e) {
-	
+	switch (drawStatus) {
+        case 1:
+            buildRectForFirstDraw(currentRect);
+			currentRect = increaseSizeOfRectange(currentRect);
+            drawStatus = 2;
+            break;
+        case 2:
+            if (currentHandle) {
+                buildRectAfterResize();
+				currentRect = increaseSizeOfRectange(currentRect);
+            }
+            currentHandle = false;
+    }
+    isDraw = false;
+    draw();
 }
 
 // Draw
